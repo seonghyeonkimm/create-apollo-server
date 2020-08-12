@@ -1,0 +1,7 @@
+{
+  "name": "create-apollo-server",
+  "version": "1.0.0",
+  "repository": "git@github.com:seonghyeonkimm/create-apollo-server.git",
+  "author": "Seonghyeon Kim <impressor7@gmail.com>",
+  "license": "MIT"
+}
