@@ -1,10 +1,11 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
 
 import Product from '../models/Product';
+import { TContext } from '..';
+import { ProductInput } from '../generated/graphql';
 
-type TContext = any;
 class ProductAPI extends DataSource<TContext> {
-  private context: TContext;
+  private context: TContext | undefined;
 
   constructor() {
     super();
@@ -14,7 +15,7 @@ class ProductAPI extends DataSource<TContext> {
     this.context = config.context;
   }
 
-  async createProduct(input: any) {
+  async createProduct(input: ProductInput) {
     const theProduct = await Product.create(input);
     return theProduct;
   }

@@ -5,12 +5,10 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { addResolversToSchema } from '@graphql-tools/schema';
 
 import resolvers from './resolvers';
-import ProductAPI from './datasources/product';
+import dataSources from './datasources';
 
 export type TContext = {
-  dataSources: {
-    productAPI: ProductAPI;
-  }
+  dataSources: ReturnType<typeof dataSources>;
 }
 
 const schema = loadSchemaSync(
@@ -24,12 +22,8 @@ const schemaWithResolvers = addResolversToSchema({
 });
 
 const server = new ApolloServer({
+  dataSources,
   schema: schemaWithResolvers,
-  dataSources: () => {
-    return {
-      productAPI: new ProductAPI(),
-    };
-  },
 });
 
 server.listen().then(({ url }) => {
