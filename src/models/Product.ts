@@ -1,4 +1,4 @@
-import createOrGetSequelize from '../db';
+import createOrGetSequelize from './db';
 import { DataTypes, Model, Optional } from 'sequelize';
 
 interface ProductAttributes {
