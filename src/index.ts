@@ -1,42 +1,19 @@
-import { ApolloServer, gql } from 'apollo-server';
+import path from 'path';
+import { ApolloServer } from 'apollo-server';
+import { loadSchemaSync } from '@graphql-tools/load';
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { addResolversToSchema } from '@graphql-tools/schema';
+
 import ProductAPI from './datasources/product';
 
-const typeDefs = gql`
-  type Product {
-    id: ID!
-    name: String!
-    tags: [Tag]!
-    options: [ProductOption]!
-  }
-
-  type ProductOption {
-    id: ID!
-    name: String!
-    productId: ID!
-  }
-
-  type Tag {
-    id: ID!
-    name: String!
-    productId: ID!
-  }
-
-  type Query {
-    products: [Product]!
-  }
-
-  input ProductInput {
-    name: String!
-  }
-
-  type Mutation {
-    createProduct(input: ProductInput): Product!
-  }
-`;
+const schema = loadSchemaSync(
+  path.join(__dirname, 'schemas/schema.graphql'),
+  { loaders: [new GraphQLFileLoader()] },
+);
 
 const resolvers = {
   Query: {
-    products: async (parent: any, args: any, { dataSources }: any) => {
+    products: async (_: any, __: any, { dataSources }: any) => {
       return await dataSources.productAPI.getAllProducts();
     },
   },
@@ -47,9 +24,13 @@ const resolvers = {
   },
 };
 
-const server = new ApolloServer({
-  typeDefs,
+const schemaWithResolvers = addResolversToSchema({
+  schema,
   resolvers,
+});
+
+const server = new ApolloServer({
+  schema: schemaWithResolvers,
   context: { contextData: 1 },
   dataSources: () => {
     return {
