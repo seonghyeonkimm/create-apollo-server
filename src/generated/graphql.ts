@@ -54,7 +54,8 @@ export type ProductInput = {
   name: Scalars['String'];
 };
 
-
+export type WithIndex<TObject> = TObject & Record<string, any>;
+export type ResolversObject<TObject> = WithIndex<TObject>;
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -131,7 +132,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 /** Mapping between all available schema types and the resolvers types */
-export type ResolversTypes = {
+export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   Product: ResolverTypeWrapper<Product>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
@@ -141,10 +142,10 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   ProductInput: ProductInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-};
+}>;
 
 /** Mapping between all available schema types and the resolvers parents */
-export type ResolversParentTypes = {
+export type ResolversParentTypes = ResolversObject<{
   Query: {};
   Product: Product;
   ID: Scalars['ID'];
@@ -154,45 +155,45 @@ export type ResolversParentTypes = {
   Mutation: {};
   ProductInput: ProductInput;
   Boolean: Scalars['Boolean'];
-};
+}>;
 
-export type QueryResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+export type QueryResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   products?: Resolver<Array<Maybe<ResolversTypes['Product']>>, ParentType, ContextType>;
-};
+}>;
 
-export type ProductResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
+export type ProductResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tag']>>>, ParentType, ContextType>;
   options?: Resolver<Maybe<Array<Maybe<ResolversTypes['ProductOption']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
+}>;
 
-export type TagResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = {
+export type TagResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   productId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
+}>;
 
-export type ProductOptionResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['ProductOption'] = ResolversParentTypes['ProductOption']> = {
+export type ProductOptionResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['ProductOption'] = ResolversParentTypes['ProductOption']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   productId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-};
+}>;
 
-export type MutationResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+export type MutationResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, never>>;
-};
+}>;
 
-export type Resolvers<ContextType = TContext> = {
+export type Resolvers<ContextType = TContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;
   Tag?: TagResolvers<ContextType>;
   ProductOption?: ProductOptionResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
-};
+}>;
 
 
 /**

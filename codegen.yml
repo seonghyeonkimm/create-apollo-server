@@ -6,6 +6,7 @@ generates:
     config:
       scalars:
         ID: Number
+      useIndexSignature: true
       contextType: '../index#TContext'
     plugins:
       - "typescript"
