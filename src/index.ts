@@ -1,3 +1,8 @@
+import dotenv from 'dotenv';
+
+// environment variables
+dotenv.config();
+
 import path from 'path';
 import { ApolloServer } from 'apollo-server';
 import { loadSchemaSync } from '@graphql-tools/load';
