@@ -82,16 +82,12 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Tag",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "Tag",
+                "ofType": null
               }
             },
             "isDeprecated": false,
@@ -102,16 +98,12 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "ProductOption",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "ProductOption",
+                "ofType": null
               }
             },
             "isDeprecated": false,
