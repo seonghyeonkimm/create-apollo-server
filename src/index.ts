@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import path from 'path';
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, AuthenticationError, UserInputError } from 'apollo-server';
 import { loadSchemaSync } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { addResolversToSchema } from '@graphql-tools/schema';
@@ -29,6 +29,20 @@ const schemaWithResolvers = addResolversToSchema({
 const server = new ApolloServer({
   dataSources,
   schema: schemaWithResolvers,
+  engine: {
+    graphVariant: 'current',
+    reportSchema: !!process.env.APOLLO_KEY,
+    rewriteError: (error) => {
+      if (
+        error instanceof AuthenticationError ||
+        error instanceof UserInputError
+      ) {
+        return null;
+      }
+
+      return error;
+    },
+  }
 });
 
 server.listen().then(({ url }) => {

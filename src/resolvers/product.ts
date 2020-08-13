@@ -1,4 +1,5 @@
 import { Resolvers } from "../generated/graphql";
+import { UserInputError } from "apollo-server";
 
 const resolver: Resolvers = {
   Query: {
@@ -9,7 +10,7 @@ const resolver: Resolvers = {
   Mutation: {
     createProduct: async (_, args, { dataSources }) => {
       if (!args.input) {
-        throw new Error('input arguments is required');
+        throw new UserInputError('input arguments is required');
       }
 
       return await dataSources.productAPI.createProduct(args.input);
