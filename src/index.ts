@@ -1,4 +1,5 @@
 import { ApolloServer, gql } from 'apollo-server';
+import ProductAPI from './datasources/product';
 
 const typeDefs = gql`
   type Product {
@@ -23,30 +24,39 @@ const typeDefs = gql`
   type Query {
     products: [Product]!
   }
-`;
 
-const products = [
-  {
-    id: 1,
-    name: 'Product 1',
-    tags: [],
-    options: [],
-  },
-  {
-    id: 2,
-    name: 'Product 2',
-    tags: [],
-    options: [],
-  },
-];
+  input ProductInput {
+    name: String!
+  }
+
+  type Mutation {
+    createProduct(input: ProductInput): Product!
+  }
+`;
 
 const resolvers = {
   Query: {
-    products: () => products,
+    products: async (parent: any, args: any, { dataSources }: any) => {
+      return await dataSources.productAPI.getAllProducts();
+    },
+  },
+  Mutation: {
+    createProduct: async (_: any, args: any, { dataSources }: any) => {
+      return await dataSources.productAPI.createProduct(args.input);
+    },
   },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: { contextData: 1 },
+  dataSources: () => {
+    return {
+      productAPI: new ProductAPI(),
+    };
+  },
+});
 
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);

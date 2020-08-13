@@ -8,12 +8,13 @@ export default () => {
   sequelize = new Sequelize({
     dialect: 'mysql',
     host: 'localhost',
+    username: 'root',
     database: 'cas-dev',
   });
 
   // Only in development mode, sequelize try to sync db with models
   // This task should be done by migration scripts later
-  sequelize.sync({ alter: true, match:  /_dev$/ });
+  sequelize.sync({ alter: true, match:  /-dev$/ });
 
   return sequelize;
 };
