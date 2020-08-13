@@ -8,6 +8,8 @@ export default {
   },
   Mutation: {
     createProduct: async (_, args, { dataSources }) => {
+      if (!args.input) return [];
+
       return await dataSources.productAPI.createProduct(args.input);
     },
   },
