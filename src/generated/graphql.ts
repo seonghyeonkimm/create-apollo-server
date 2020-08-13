@@ -54,6 +54,11 @@ export type ProductInput = {
   name: Scalars['String'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  productAdded: Product;
+};
+
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
 
@@ -141,6 +146,7 @@ export type ResolversTypes = ResolversObject<{
   ProductOption: ResolverTypeWrapper<ProductOption>;
   Mutation: ResolverTypeWrapper<{}>;
   ProductInput: ProductInput;
+  Subscription: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -154,6 +160,7 @@ export type ResolversParentTypes = ResolversObject<{
   ProductOption: ProductOption;
   Mutation: {};
   ProductInput: ProductInput;
+  Subscription: {};
   Boolean: Scalars['Boolean'];
 }>;
 
@@ -187,12 +194,17 @@ export type MutationResolvers<ContextType = TContext, ParentType extends Resolve
   createProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, never>>;
 }>;
 
+export type SubscriptionResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
+  productAdded?: SubscriptionResolver<ResolversTypes['Product'], "productAdded", ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = TContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;
   Tag?: TagResolvers<ContextType>;
   ProductOption?: ProductOptionResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
 }>;
 
 

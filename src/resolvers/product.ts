@@ -8,14 +8,24 @@ const resolver: Resolvers = {
     },
   },
   Mutation: {
-    createProduct: async (_, args, { dataSources }) => {
+    createProduct: async (_, args, { pubsub, dataSources }) => {
       if (!args.input) {
         throw new UserInputError('input arguments is required');
       }
 
-      return await dataSources.productAPI.createProduct(args.input);
+      const newProduct = await dataSources.productAPI.createProduct(args.input);
+      pubsub.publish(PRODUCT_ADDED, { productAdded: newProduct });
+      return newProduct;
+    },
+  },
+  Subscription: {
+    productAdded: {
+      subscribe: (_, args, { pubsub }) => pubsub.asyncIterator([PRODUCT_ADDED]),
     },
   },
 }
+
+// Subscription event labels
+const PRODUCT_ADDED = 'PRODUCT_ADDED';
 
 export default resolver;

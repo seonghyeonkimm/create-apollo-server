@@ -7,3 +7,7 @@ type Query {
 type Mutation {
   createProduct(input: ProductInput): Product!
 }
+
+type Subscription {
+  productAdded: Product!
+}
