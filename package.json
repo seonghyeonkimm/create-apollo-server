@@ -5,7 +5,8 @@
   "author": "Seonghyeon Kim <impressor7@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec ts-node src/index.ts"
+    "start": "nodemon --exec ts-node src/index.ts",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "apollo-server": "^2.16.1",
@@ -15,11 +16,15 @@
     "sequelize": "^6.3.4"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.17.8",
+    "@graphql-codegen/cli": "1.17.8",
     "@types/node": "^14.0.27",
     "@types/validator": "^13.1.0",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.2",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "@graphql-codegen/typescript": "1.17.8",
+    "@graphql-codegen/typescript-resolvers": "1.17.8",
+    "@graphql-codegen/typescript-document-nodes": "1.17.8",
+    "@graphql-codegen/introspection": "1.17.8"
   }
 }
