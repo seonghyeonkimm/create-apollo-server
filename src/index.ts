@@ -32,7 +32,7 @@ const schemaWithResolvers = addResolversToSchema({
   resolvers,
 });
 
-const server = new ApolloServer({
+export const server = new ApolloServer({
   dataSources,
   schema: schemaWithResolvers,
   context: {
@@ -54,6 +54,8 @@ const server = new ApolloServer({
   }
 });
 
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  server.listen().then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+  });
+}

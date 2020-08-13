@@ -7,7 +7,9 @@
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
     "codegen": "graphql-codegen --config codegen.yml",
-    "codegen:watch": "graphql-codegen --config codegen.yml -w"
+    "codegen:watch": "graphql-codegen --config codegen.yml -w",
+    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
+    "test:watch": "yarn run test --watch"
   },
   "dependencies": {
     "apollo-server": "^2.16.1",
@@ -23,9 +25,14 @@
     "@graphql-codegen/typescript": "1.17.8",
     "@graphql-codegen/typescript-document-nodes": "1.17.8",
     "@graphql-codegen/typescript-resolvers": "1.17.8",
+    "@types/jest": "^26.0.9",
     "@types/node": "^14.0.27",
     "@types/validator": "^13.1.0",
+    "apollo-server-testing": "^2.16.1",
+    "graphql-request": "^3.0.0",
+    "jest": "^26.4.0",
     "nodemon": "^2.0.4",
+    "ts-jest": "^26.2.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   }
