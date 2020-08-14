@@ -1,6 +1,6 @@
 import { GraphQLClient, gql } from 'graphql-request';
 
-describe('[Product]' , () => {
+describe('[Resolver.Product]' , () => {
   let client: GraphQLClient | undefined;
 
   beforeAll(() => {

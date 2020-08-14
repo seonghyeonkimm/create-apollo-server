@@ -16,8 +16,8 @@ class ProductAPI extends DataSource<TContext> {
   }
 
   async createProduct(input: ProductInput) {
-    const theProduct = await Product.create(input);
-    return theProduct;
+    const newProduct = await Product.create(input);
+    return newProduct;
   }
 
   async getAllProducts() {
