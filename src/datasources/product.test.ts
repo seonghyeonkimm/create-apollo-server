@@ -25,21 +25,7 @@ describe('[DataSource.Product]' , () => {
       expect(result).toHaveProperty('name');
       expect(result).toHaveProperty('productOptions');
     });
-
-    it('should return new Product with exsisting ProductOptions', async () => {
-      const productAPI = new ProductAPI();
-      const result = await productAPI.createProduct({
-        name: 'New product with exsisting created options',
-        productOptions: [{ id: 1 }],
-      });
-
-      expect(result).toHaveProperty('id');
-      expect(result).toHaveProperty('name');
-      expect(result).toHaveProperty('productOptions');
-      expect(result.productOptions).toHaveLength(1);
-      expect((result.productOptions || [])[0]).toHaveProperty('id');
-    })
-  })
+  });
 
   describe('[getAllProducts]', () => {
     it('should return products', async () => {
