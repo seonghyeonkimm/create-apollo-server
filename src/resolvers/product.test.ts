@@ -1,6 +1,6 @@
 import { GraphQLClient, gql } from 'graphql-request';
 
-describe('[Resolver.Product]' , () => {
+describe('[Resolver.Product]', () => {
   let client: GraphQLClient | undefined;
 
   beforeAll(() => {
@@ -23,18 +23,21 @@ describe('[Resolver.Product]' , () => {
     });
 
     it('return new Product with ProductOptions', async () => {
-      const response = await client?.request(gql`
-        mutation CreateChannel($input: ProductInput) {
-          createProduct(input: $input) {
-            id
+      const response = await client?.request(
+        gql`
+          mutation CreateChannel($input: ProductInput) {
+            createProduct(input: $input) {
+              id
+            }
           }
-        }
-      `, { input: { name: 'New Product' }});
+        `,
+        { input: { name: 'New Product' } },
+      );
 
       expect(response).toHaveProperty('createProduct');
       expect(response.createProduct).toHaveProperty('id');
-    })
-  })
+    });
+  });
 
   describe('[Query.products]', () => {
     it('return products', async () => {
@@ -44,7 +47,7 @@ describe('[Resolver.Product]' , () => {
             id
           }
         }
-      `)
+      `);
 
       expect(response).toHaveProperty('products');
     });

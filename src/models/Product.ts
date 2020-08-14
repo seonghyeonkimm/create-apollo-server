@@ -1,6 +1,15 @@
 import createOrGetSequelize from './db';
-
-import { DataTypes, Model, Optional, HasManyGetAssociationsMixin, HasManyAddAssociationMixin, HasManyHasAssociationMixin, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin, Association } from 'sequelize';
+import {
+  DataTypes,
+  Model,
+  Optional,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyHasAssociationMixin,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Association,
+} from 'sequelize';
 import ProductOption from './ProductOption';
 
 interface ProductAttributes {
@@ -8,7 +17,7 @@ interface ProductAttributes {
   name: string;
 }
 
-type ProductCreationAttributes = Optional<ProductAttributes ,'id'>
+type ProductCreationAttributes = Optional<ProductAttributes, 'id'>;
 
 class Product extends Model<ProductAttributes, ProductCreationAttributes> {
   public id!: number;
@@ -32,21 +41,24 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> {
   };
 }
 
-Product.init({
-  id: {
-    primaryKey: true,
-    autoIncrement: true,
-    type: DataTypes.INTEGER.UNSIGNED,
+Product.init(
+  {
+    id: {
+      primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER.UNSIGNED,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
+  {
+    sequelize: createOrGetSequelize(),
+    paranoid: true,
+    modelName: 'Product',
   },
-}, {
-  sequelize: createOrGetSequelize(),
-  paranoid: true,
-  modelName: 'Product',
-});
+);
 
 // associations
 Product.hasMany(ProductOption, {

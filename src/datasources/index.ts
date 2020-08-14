@@ -4,4 +4,4 @@ export default () => {
   return {
     productAPI: new ProductAPI(),
   };
-}
+};

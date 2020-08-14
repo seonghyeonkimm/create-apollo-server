@@ -8,9 +8,12 @@ interface ProductOptionAttributes {
   productId: number;
 }
 
-type ProductOptionCreateAttributes = Optional<ProductOptionAttributes ,'id'>
+type ProductOptionCreateAttributes = Optional<ProductOptionAttributes, 'id'>;
 
-class ProductOption extends Model<ProductOptionAttributes, ProductOptionCreateAttributes> {
+class ProductOption extends Model<
+  ProductOptionAttributes,
+  ProductOptionCreateAttributes
+> {
   public id!: number;
   public name!: string;
   public productId!: number;
@@ -20,24 +23,27 @@ class ProductOption extends Model<ProductOptionAttributes, ProductOptionCreateAt
   public readonly deletedAt!: Date;
 }
 
-ProductOption.init({
-  id: {
-    primaryKey: true,
-    autoIncrement: true,
-    type: DataTypes.INTEGER.UNSIGNED,
+ProductOption.init(
+  {
+    id: {
+      primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER.UNSIGNED,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    productId: {
+      allowNull: false,
+      type: DataTypes.INTEGER.UNSIGNED,
+    },
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
+  {
+    sequelize: createOrGetSequelize(),
+    paranoid: true,
+    modelName: 'ProductOption',
   },
-  productId: {
-    allowNull: false,
-    type: DataTypes.INTEGER.UNSIGNED,
-  },
-}, {
-  sequelize: createOrGetSequelize(),
-  paranoid: true,
-  modelName: 'ProductOption',
-});
+);
 
 export default ProductOption;

@@ -1,6 +1,6 @@
-import ProductAPI from "./product";
+import ProductAPI from './product';
 
-describe('[DataSource.Product]' , () => {
+describe('[DataSource.Product]', () => {
   describe('[createProduct]', () => {
     it('should return new Product', async () => {
       const productAPI = new ProductAPI();
@@ -34,5 +34,5 @@ describe('[DataSource.Product]' , () => {
 
       expect(result).toHaveProperty('length');
     });
-  })
+  });
 });

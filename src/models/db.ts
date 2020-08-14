@@ -1,6 +1,6 @@
 import { Sequelize, Dialect } from 'sequelize';
 
-let sequelize: Sequelize | undefined; 
+let sequelize: Sequelize | undefined;
 
 export default () => {
   if (sequelize) return sequelize;

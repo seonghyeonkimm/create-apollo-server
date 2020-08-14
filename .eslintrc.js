@@ -1,23 +1,23 @@
 module.exports = {
   env: {
     es2020: true,
-    node: true
+    jest: true,
+    node: true,
   },
   extends: [
     'standard',
     'plugin:@typescript-eslint/recommended',
     'prettier',
-    "prettier/@typescript-eslint",
+    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 11,
-    sourceType: 'module'
+    sourceType: 'module',
   },
-  plugins: [
-    '@typescript-eslint'
-  ],
+  plugins: ['@typescript-eslint'],
   rules: {
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-  }
-}
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+  },
+};

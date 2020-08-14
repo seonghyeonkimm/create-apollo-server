@@ -1,5 +1,5 @@
-import { Resolvers } from "../generated/graphql";
-import { UserInputError } from "apollo-server";
+import { Resolvers } from '../generated/graphql';
+import { UserInputError } from 'apollo-server';
 
 const resolver: Resolvers = {
   Query: {
@@ -23,7 +23,7 @@ const resolver: Resolvers = {
       subscribe: (_, args, { pubsub }) => pubsub.asyncIterator([PRODUCT_ADDED]),
     },
   },
-}
+};
 
 // Subscription event labels
 const PRODUCT_ADDED = 'PRODUCT_ADDED';

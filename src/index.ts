@@ -18,16 +18,14 @@ import { addResolversToSchema } from '@graphql-tools/schema';
 import resolvers from './resolvers';
 import dataSources from './datasources';
 
-
 export type TContext = {
   pubsub: PubSub;
   dataSources: ReturnType<typeof dataSources>;
-}
+};
 
-const schema = loadSchemaSync(
-  path.join(__dirname, 'schemas/schema.graphql'),
-  { loaders: [new GraphQLFileLoader()] },
-);
+const schema = loadSchemaSync(path.join(__dirname, 'schemas/schema.graphql'), {
+  loaders: [new GraphQLFileLoader()],
+});
 
 const schemaWithResolvers = addResolversToSchema({
   schema,
@@ -53,7 +51,7 @@ export const server = new ApolloServer({
 
       return error;
     },
-  }
+  },
 });
 
 if (process.env.NODE_ENV !== 'test') {

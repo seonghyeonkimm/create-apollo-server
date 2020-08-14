@@ -14,12 +14,16 @@ class ProductAPI extends DataSource<TContext> {
   async createProduct(input: ProductInput) {
     const { name, productOptions } = input;
 
-    const newProduct = await Product.create({
-      name,
-      ...(productOptions && productOptions.length > 0 && {
-        productOptions: productOptions,
-      })
-    }, { include: [Product.associations.productOptions]})
+    const newProduct = await Product.create(
+      {
+        name,
+        ...(productOptions &&
+          productOptions.length > 0 && {
+            productOptions: productOptions,
+          }),
+      },
+      { include: [Product.associations.productOptions] },
+    );
 
     return newProduct;
   }
