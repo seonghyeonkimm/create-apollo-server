@@ -13,8 +13,8 @@ describe('[DataSource.Product]', () => {
     it('should return new Product with ProductOptions', async () => {
       const productAPI = new ProductAPI();
       const result = await productAPI.createProduct({
-        name: 'New product With newly created options',
-        productOptions: [
+        name: 'New product with newly created options',
+        options: [
           {
             name: 'Option 1',
           },
@@ -23,7 +23,40 @@ describe('[DataSource.Product]', () => {
 
       expect(result).toHaveProperty('id');
       expect(result).toHaveProperty('name');
-      expect(result).toHaveProperty('productOptions');
+      expect(result).toHaveProperty('options');
+    });
+
+    it('should return new Product with newly created ProductTags', async () => {
+      const productAPI = new ProductAPI();
+      const result = await productAPI.createProduct({
+        name: 'New product with newly created tags',
+        tags: [
+          {
+            name: 'Tag 1',
+          },
+        ],
+      });
+
+      expect(result).toHaveProperty('id');
+      expect(result).toHaveProperty('name');
+      expect(result).toHaveProperty('tags');
+    });
+
+    it('should return new Product with exsisting ProductTags', async () => {
+      const productAPI = new ProductAPI();
+      const result = await productAPI.createProduct({
+        name: 'New product with newly created tags',
+        tags: [
+          {
+            id: 1,
+          },
+        ],
+      });
+
+      expect(result).toHaveProperty('id');
+      expect(result).toHaveProperty('name');
+      expect(result).toHaveProperty('tags');
+      expect((result.tags || [])[0]).toHaveProperty('id', 1);
     });
   });
 

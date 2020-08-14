@@ -30,5 +30,5 @@ input TagInput {
 input ProductInput {
   name: String!
   tags: [TagInput]
-  productOptions: [ProductOptionInput]
+  options: [ProductOptionInput]
 }

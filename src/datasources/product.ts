@@ -3,6 +3,7 @@ import { DataSource, DataSourceConfig } from 'apollo-datasource';
 import { TContext } from '..';
 import Product from '../models/Product';
 import { ProductInput } from '../generated/graphql';
+import ProductTag from '../models/ProductTag';
 
 class ProductAPI extends DataSource<TContext> {
   private context: TContext | undefined;
@@ -12,27 +13,35 @@ class ProductAPI extends DataSource<TContext> {
   }
 
   async createProduct(input: ProductInput) {
-    const { name, productOptions, tags } = input;
+    const { name, options, tags } = input;
 
     const newProduct = await Product.create(
       {
         name,
-        ...(productOptions &&
-          productOptions.length > 0 && {
-            productOptions,
-          }),
-        ...(tags &&
-          tags.length > 0 && {
-            tags,
+        ...(options &&
+          options.length > 0 && {
+            options,
           }),
       },
       {
-        include: [
-          Product.associations.productOptions,
-          Product.associations.tags,
-        ],
+        include: [Product.associations.tags, Product.associations.options],
       },
     );
+
+    if (tags && tags.length > 0) {
+      const tagIds = await Promise.all(
+        tags.map(async (tag) => {
+          if (tag?.id) return Promise.resolve(tag.id);
+          if (!tag?.name) return;
+          const newTag = await ProductTag.create({ name: tag?.name });
+          return newTag.id;
+        }),
+      );
+
+      const ids = tagIds.filter(Boolean) as number[];
+      await newProduct.addTags(ids);
+      await newProduct.reload();
+    }
 
     return newProduct;
   }

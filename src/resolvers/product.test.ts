@@ -22,7 +22,7 @@ describe('[Resolver.Product]', () => {
       }
     });
 
-    it('return new Product with ProductOptions', async () => {
+    it('return new Product', async () => {
       const response = await client?.request(
         gql`
           mutation CreateChannel($input: ProductInput) {

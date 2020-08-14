@@ -52,7 +52,7 @@ export type MutationCreateProductArgs = {
 export type ProductInput = {
   name: Scalars['String'];
   tags?: Maybe<Array<Maybe<TagInput>>>;
-  productOptions?: Maybe<Array<Maybe<ProductOptionInput>>>;
+  options?: Maybe<Array<Maybe<ProductOptionInput>>>;
 };
 
 export type TagInput = {

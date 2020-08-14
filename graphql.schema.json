@@ -312,7 +312,7 @@
             "defaultValue": null
           },
           {
-            "name": "productOptions",
+            "name": "options",
             "description": null,
             "type": {
               "kind": "LIST",

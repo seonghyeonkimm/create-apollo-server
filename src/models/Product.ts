@@ -28,24 +28,28 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> {
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date;
 
-  public getProductOptions!: HasManyGetAssociationsMixin<ProductOption>;
-  public addProductOptions!: HasManyAddAssociationMixin<ProductOption, number>;
-  public hasProductOptions!: HasManyHasAssociationMixin<ProductOption, number>;
-  public countProductOptions!: HasManyCountAssociationsMixin;
-  public createProductOptions!: HasManyCreateAssociationMixin<ProductOption>;
+  public getOptions!: HasManyGetAssociationsMixin<ProductOption>;
+  public addOptions!: HasManyAddAssociationMixin<
+    ProductOption,
+    number | number[]
+  >;
+
+  public countOptions!: HasManyCountAssociationsMixin;
+  public hasOption!: HasManyHasAssociationMixin<ProductOption, number>;
+  public createOption!: HasManyCreateAssociationMixin<ProductOption>;
 
   public getTags!: HasManyGetAssociationsMixin<ProductTag>;
-  public addTags!: HasManyAddAssociationMixin<ProductTag, number>;
-  public hasTags!: HasManyHasAssociationMixin<ProductTag, number>;
+  public addTags!: HasManyAddAssociationMixin<ProductTag, number | number[]>;
   public countTags!: HasManyCountAssociationsMixin;
-  public createTags!: HasManyCreateAssociationMixin<ProductTag>;
+  public hasTag!: HasManyHasAssociationMixin<ProductTag, number>;
+  public createTag!: HasManyCreateAssociationMixin<ProductTag>;
 
   // association types
-  public readonly productOptions?: ProductOption[];
+  public readonly options?: ProductOption[];
   public readonly tags?: ProductTag[];
 
   public static associations: {
-    productOptions: Association<Product, ProductOption>;
+    options: Association<Product, ProductOption>;
     tags: Association<Product, ProductTag>;
   };
 }
@@ -73,7 +77,7 @@ Product.init(
 // associations
 Product.hasMany(ProductOption, {
   foreignKey: 'productId',
-  as: 'productOptions',
+  as: 'options',
 });
 
 ProductTag.belongsToMany(Product, {
@@ -81,6 +85,7 @@ ProductTag.belongsToMany(Product, {
 });
 
 Product.belongsToMany(ProductTag, {
+  as: 'tags',
   through: 'ProductTagAssoc',
 });
 
