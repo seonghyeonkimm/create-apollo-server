@@ -30,7 +30,6 @@ export type Tag = {
   __typename?: 'Tag';
   id: Scalars['ID'];
   name: Scalars['String'];
-  productId: Scalars['ID'];
 };
 
 export type ProductOption = {
@@ -52,7 +51,13 @@ export type MutationCreateProductArgs = {
 
 export type ProductInput = {
   name: Scalars['String'];
+  tags?: Maybe<Array<Maybe<TagInput>>>;
   productOptions?: Maybe<Array<Maybe<ProductOptionInput>>>;
+};
+
+export type TagInput = {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type ProductOptionInput = {
@@ -153,6 +158,7 @@ export type ResolversTypes = ResolversObject<{
   ProductOption: ResolverTypeWrapper<ProductOption>;
   Mutation: ResolverTypeWrapper<{}>;
   ProductInput: ProductInput;
+  TagInput: TagInput;
   ProductOptionInput: ProductOptionInput;
   Subscription: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -168,6 +174,7 @@ export type ResolversParentTypes = ResolversObject<{
   ProductOption: ProductOption;
   Mutation: {};
   ProductInput: ProductInput;
+  TagInput: TagInput;
   ProductOptionInput: ProductOptionInput;
   Subscription: {};
   Boolean: Scalars['Boolean'];
@@ -188,7 +195,6 @@ export type ProductResolvers<ContextType = TContext, ParentType extends Resolver
 export type TagResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  productId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 

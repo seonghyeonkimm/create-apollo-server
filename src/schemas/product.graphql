@@ -7,7 +7,6 @@ type ProductOption {
 type Tag {
   id: ID!
   name: String!
-  productId: ID!
 }
 
 type Product {
@@ -23,7 +22,13 @@ input ProductOptionInput {
   productId: ID
 }
 
+input TagInput {
+  id: ID
+  name: String
+}
+
 input ProductInput {
   name: String!
+  tags: [TagInput]
   productOptions: [ProductOptionInput]
 }

@@ -11,6 +11,7 @@ import {
   Association,
 } from 'sequelize';
 import ProductOption from './ProductOption';
+import ProductTag from './ProductTag';
 
 interface ProductAttributes {
   id: number;
@@ -30,14 +31,22 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> {
   public getProductOptions!: HasManyGetAssociationsMixin<ProductOption>;
   public addProductOptions!: HasManyAddAssociationMixin<ProductOption, number>;
   public hasProductOptions!: HasManyHasAssociationMixin<ProductOption, number>;
-  public countProductOptionss!: HasManyCountAssociationsMixin;
+  public countProductOptions!: HasManyCountAssociationsMixin;
   public createProductOptions!: HasManyCreateAssociationMixin<ProductOption>;
+
+  public getTags!: HasManyGetAssociationsMixin<ProductTag>;
+  public addTags!: HasManyAddAssociationMixin<ProductTag, number>;
+  public hasTags!: HasManyHasAssociationMixin<ProductTag, number>;
+  public countTags!: HasManyCountAssociationsMixin;
+  public createTags!: HasManyCreateAssociationMixin<ProductTag>;
 
   // association types
   public readonly productOptions?: ProductOption[];
+  public readonly tags?: ProductTag[];
 
   public static associations: {
     productOptions: Association<Product, ProductOption>;
+    tags: Association<Product, ProductTag>;
   };
 }
 
@@ -56,15 +65,23 @@ Product.init(
   {
     sequelize: createOrGetSequelize(),
     paranoid: true,
+    tableName: 'product',
     modelName: 'Product',
   },
 );
 
 // associations
 Product.hasMany(ProductOption, {
-  sourceKey: 'id',
   foreignKey: 'productId',
   as: 'productOptions',
+});
+
+ProductTag.belongsToMany(Product, {
+  through: 'ProductTagAssoc',
+});
+
+Product.belongsToMany(ProductTag, {
+  through: 'ProductTagAssoc',
 });
 
 export default Product;
