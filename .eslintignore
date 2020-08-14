@@ -1,0 +1,5 @@
+# codgen
+src/generated/*
+
+# graphql schemas
+src/schemas/*

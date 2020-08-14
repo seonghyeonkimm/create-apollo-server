@@ -7,10 +7,6 @@ import { ProductInput } from '../generated/graphql';
 class ProductAPI extends DataSource<TContext> {
   private context: TContext | undefined;
 
-  constructor() {
-    super();
-  }
-
   initialize(config: DataSourceConfig<TContext>) {
     this.context = config.context;
   }
