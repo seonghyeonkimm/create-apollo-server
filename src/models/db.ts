@@ -12,8 +12,5 @@ export default () => {
     dialect: process.env.DATABASE_DIALECT as Dialect,
   });
 
-  // TODO: This task should be done by migration scripts later
-  sequelize.sync({ alter: true, match:  /-dev$/ });
-
   return sequelize;
 };
