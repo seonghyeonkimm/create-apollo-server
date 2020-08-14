@@ -5,7 +5,7 @@ generates:
   src/generated/graphql.ts:
     config:
       scalars:
-        ID: Number
+        ID: number
       useIndexSignature: true
       contextType: '../index#TContext'
     plugins:

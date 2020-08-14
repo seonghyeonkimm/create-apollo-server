@@ -1,6 +1,7 @@
 import createOrGetSequelize from './db';
 
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Model, Optional, HasManyGetAssociationsMixin, HasManyAddAssociationMixin, HasManyHasAssociationMixin, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin, Association } from 'sequelize';
+import ProductOption from './ProductOption';
 
 interface ProductAttributes {
   id: number;
@@ -16,6 +17,19 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> {
   public readonly craetedAt!: Date;
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date;
+
+  public getProductOptions!: HasManyGetAssociationsMixin<ProductOption>;
+  public addProductOptions!: HasManyAddAssociationMixin<ProductOption, number>;
+  public hasProductOptions!: HasManyHasAssociationMixin<ProductOption, number>;
+  public countProductOptionss!: HasManyCountAssociationsMixin;
+  public createProductOptions!: HasManyCreateAssociationMixin<ProductOption>;
+
+  // association types
+  public readonly productOptions?: ProductOption[];
+
+  public static associations: {
+    productOptions: Association<Product, ProductOption>;
+  };
 }
 
 Product.init({
@@ -32,6 +46,13 @@ Product.init({
   sequelize: createOrGetSequelize(),
   paranoid: true,
   modelName: 'Product',
+});
+
+// associations
+Product.hasMany(ProductOption, {
+  sourceKey: 'id',
+  foreignKey: 'productId',
+  as: 'productOptions',
 });
 
 export default Product;

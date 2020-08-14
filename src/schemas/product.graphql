@@ -17,6 +17,13 @@ type Product {
   options: [ProductOption]
 }
 
+input ProductOptionInput {
+  id: ID
+  name: String
+  productId: ID
+}
+
 input ProductInput {
   name: String!
+  productOptions: [ProductOptionInput]
 }

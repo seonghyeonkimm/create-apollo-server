@@ -2,7 +2,7 @@ import { DataSource, DataSourceConfig } from 'apollo-datasource';
 
 import { TContext } from '..';
 import Product from '../models/Product';
-import { ProductInput } from '../generated/graphql';
+import { ProductInput, ProductOptionInput } from '../generated/graphql';
 
 class ProductAPI extends DataSource<TContext> {
   private context: TContext | undefined;
@@ -12,7 +12,41 @@ class ProductAPI extends DataSource<TContext> {
   }
 
   async createProduct(input: ProductInput) {
-    const newProduct = await Product.create(input);
+    const { name, productOptions } = input;
+
+    const { newProductOptions, exsistingProductOptions } = (productOptions || []).reduce((result, nextOption) => {
+      if (!nextOption) return result;
+
+      if (nextOption.id) {
+        result.exsistingProductOptions.push(nextOption)
+        return result;
+      }
+
+      result.newProductOptions.push(nextOption);
+      return result;
+    }, {
+      newProductOptions: [] as ProductOptionInput[],
+      exsistingProductOptions: [] as ProductOptionInput[],
+    });
+
+    const newProduct = await Product.create({
+      name,
+      ...(newProductOptions.length > 0 && {
+        productOptions: newProductOptions,
+      })
+    }, { include: [Product.associations.productOptions]})
+
+    if (exsistingProductOptions.length > 0) {
+      const promises = exsistingProductOptions.map(async (productOption) => {
+        if (!productOption.id) return;
+
+        await newProduct.addProductOptions(productOption.id)
+      });
+
+      await Promise.all(promises)
+      await newProduct.reload();
+    }
+
     return newProduct;
   }
 

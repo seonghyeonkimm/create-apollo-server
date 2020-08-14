@@ -21,6 +21,19 @@ describe('[Resolver.Product]' , () => {
         expect(error).toBeDefined();
       }
     });
+
+    it('return new Product with ProductOptions', async () => {
+      const response = await client?.request(gql`
+        mutation CreateChannel($input: ProductInput) {
+          createProduct(input: $input) {
+            id
+          }
+        }
+      `, { input: { name: 'New Product' }});
+
+      expect(response).toHaveProperty('createProduct');
+      expect(response.createProduct).toHaveProperty('id');
+    })
   })
 
   describe('[Query.products]', () => {

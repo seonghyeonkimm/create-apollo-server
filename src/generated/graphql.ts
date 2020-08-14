@@ -6,7 +6,7 @@ export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K]
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: Number;
+  ID: number;
   String: string;
   Boolean: boolean;
   Int: number;
@@ -52,6 +52,13 @@ export type MutationCreateProductArgs = {
 
 export type ProductInput = {
   name: Scalars['String'];
+  productOptions?: Maybe<Array<Maybe<ProductOptionInput>>>;
+};
+
+export type ProductOptionInput = {
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['ID']>;
 };
 
 export type Subscription = {
@@ -146,6 +153,7 @@ export type ResolversTypes = ResolversObject<{
   ProductOption: ResolverTypeWrapper<ProductOption>;
   Mutation: ResolverTypeWrapper<{}>;
   ProductInput: ProductInput;
+  ProductOptionInput: ProductOptionInput;
   Subscription: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
@@ -160,6 +168,7 @@ export type ResolversParentTypes = ResolversObject<{
   ProductOption: ProductOption;
   Mutation: {};
   ProductInput: ProductInput;
+  ProductOptionInput: ProductOptionInput;
   Subscription: {};
   Boolean: Scalars['Boolean'];
 }>;
