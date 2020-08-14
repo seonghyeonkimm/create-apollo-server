@@ -1,7 +1,7 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
 
-import Product from '../models/Product';
 import { TContext } from '..';
+import Product from '../models/Product';
 import { ProductInput } from '../generated/graphql';
 
 class ProductAPI extends DataSource<TContext> {

@@ -1,4 +1,8 @@
+/* eslint-disable import/first */
 import dotenv from 'dotenv';
+
+// environment variables
+dotenv.config();
 
 import path from 'path';
 import {
@@ -14,8 +18,6 @@ import { addResolversToSchema } from '@graphql-tools/schema';
 import resolvers from './resolvers';
 import dataSources from './datasources';
 
-// environment variables
-dotenv.config();
 
 export type TContext = {
   pubsub: PubSub;

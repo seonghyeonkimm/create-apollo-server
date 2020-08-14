@@ -1,4 +1,5 @@
 import createOrGetSequelize from './db';
+
 import { DataTypes, Model, Optional } from 'sequelize';
 
 interface ProductAttributes {
@@ -14,6 +15,7 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> {
 
   public readonly craetedAt!: Date;
   public readonly updatedAt!: Date;
+  public readonly deletedAt!: Date;
 }
 
 Product.init({
@@ -27,8 +29,9 @@ Product.init({
     allowNull: false
   },
 }, {
-  modelName: 'Product',
   sequelize: createOrGetSequelize(),
+  paranoid: true,
+  modelName: 'Product',
 });
 
 export default Product;

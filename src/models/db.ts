@@ -12,5 +12,10 @@ export default () => {
     dialect: process.env.DATABASE_DIALECT as Dialect,
   });
 
+  // TODO: Delete later when migration scripts task is done
+  if (process.env.NODE_ENV !== 'test') {
+    sequelize.sync({ alter: true, match: /-dev$/ });
+  }
+
   return sequelize;
 };
