@@ -1,8 +1,5 @@
 import dotenv from 'dotenv';
 
-// environment variables
-dotenv.config();
-
 import path from 'path';
 import {
   ApolloServer,
@@ -16,6 +13,9 @@ import { addResolversToSchema } from '@graphql-tools/schema';
 
 import resolvers from './resolvers';
 import dataSources from './datasources';
+
+// environment variables
+dotenv.config();
 
 export type TContext = {
   pubsub: PubSub;

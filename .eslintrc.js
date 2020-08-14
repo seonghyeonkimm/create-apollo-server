@@ -4,7 +4,10 @@ module.exports = {
     node: true
   },
   extends: [
-    'standard'
+    'standard',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    "prettier/@typescript-eslint",
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
