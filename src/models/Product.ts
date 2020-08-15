@@ -69,7 +69,6 @@ Product.init(
   {
     sequelize: createOrGetSequelize(),
     paranoid: true,
-    tableName: 'product',
     modelName: 'Product',
   },
 );
