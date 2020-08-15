@@ -9,9 +9,14 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml -w",
     "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
-    "test:watch": "yarn run test --watch"
+    "test:watch": "yarn run test --watch",
+    "prisma:start": "nodemon --exec ts-node src/prisma.ts",
+    "prisma:makemigration": "prisma migrate save --experimental",
+    "prisma:migrate": "prisma migrate up --experimental && prisma generate",
+    "prisma:studio": "prisma studio --experimental"
   },
   "dependencies": {
+    "@prisma/client": "^2.4.1",
     "apollo-server": "^2.16.1",
     "dotenv": "^8.2.0",
     "graphql": "^15.3.0",
@@ -25,6 +30,7 @@
     "@graphql-codegen/typescript": "1.17.8",
     "@graphql-codegen/typescript-document-nodes": "1.17.8",
     "@graphql-codegen/typescript-resolvers": "1.17.8",
+    "@prisma/cli": "^2.4.1",
     "@types/jest": "^26.0.9",
     "@types/node": "^14.0.27",
     "@types/validator": "^13.1.0",
