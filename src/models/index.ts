@@ -36,10 +36,5 @@ export default () => {
     model.associate(models);
   });
 
-  // TODO: Delete this when migration files exsists
-  if (process.env.NODE_ENV !== 'test') {
-    sequelize.sync({ force: true, match: /-dev$/ });
-  }
-
   return sequelize;
 };
