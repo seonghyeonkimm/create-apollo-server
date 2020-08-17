@@ -16,9 +16,13 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'simple-import-sort'],
   rules: {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+
+    'sort-imports': 'off',
+    'import/order': 'off',
+    'simple-import-sort/sort': 'error',
   },
 };

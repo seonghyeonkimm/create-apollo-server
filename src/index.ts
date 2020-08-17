@@ -1,19 +1,18 @@
-import dotenv from 'dotenv';
-
-import path from 'path';
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { loadSchemaSync } from '@graphql-tools/load';
+import { addResolversToSchema } from '@graphql-tools/schema';
 import {
   ApolloServer,
   AuthenticationError,
-  UserInputError,
   PubSub,
+  UserInputError,
 } from 'apollo-server';
-import { loadSchemaSync } from '@graphql-tools/load';
-import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
-import { addResolversToSchema } from '@graphql-tools/schema';
+import dotenv from 'dotenv';
+import path from 'path';
 
-import resolvers from './resolvers';
-import createDBConnection, { ModelStaticType } from './models';
 import createDataSources from './datasources';
+import createDBConnection, { ModelStaticType } from './models';
+import resolvers from './resolvers';
 
 export type TContext = {
   pubsub: PubSub;

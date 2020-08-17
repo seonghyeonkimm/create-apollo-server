@@ -1,8 +1,8 @@
-import { Sequelize, Dialect, Model, ModelCtor } from 'sequelize';
+import { Dialect, Model, ModelCtor, Sequelize } from 'sequelize';
 
 import initProduct, { Product } from './Product';
-import initProductTag, { ProductTag } from './ProductTag';
 import initiProductOption, { ProductOption } from './ProductOption';
+import initProductTag, { ProductTag } from './ProductTag';
 
 let sequelize: Sequelize | undefined;
 const MODELS = [initProduct, initProductTag, initiProductOption];

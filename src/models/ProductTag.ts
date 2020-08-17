@@ -1,16 +1,17 @@
 import {
+  Association,
   DataTypes,
-  Model,
-  Optional,
-  HasManyGetAssociationsMixin,
   HasManyAddAssociationMixin,
-  HasManyHasAssociationMixin,
   HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
-  Association,
-  Sequelize,
+  HasManyGetAssociationsMixin,
+  HasManyHasAssociationMixin,
+  Model,
   ModelStatic,
+  Optional,
+  Sequelize,
 } from 'sequelize';
+
 import { Product } from './Product';
 
 interface ProductTagAttributes {
