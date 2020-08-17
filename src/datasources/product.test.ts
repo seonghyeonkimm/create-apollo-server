@@ -1,7 +1,9 @@
 import { DataSourceConfig } from 'apollo-datasource';
-import createDBConnection from '../models';
+
+import createDBConnection from '~models/index';
+
 import ProductAPI from './product';
-import { TContext } from '..';
+import { TContext } from '../index';
 
 describe('[DataSource.Product]', () => {
   let productAPI: ProductAPI | undefined;

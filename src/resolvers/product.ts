@@ -1,5 +1,6 @@
-import { Resolvers } from '../generated/graphql';
 import { UserInputError } from 'apollo-server';
+
+import { Resolvers } from '~generated/graphql';
 
 const resolver: Resolvers = {
   Query: {

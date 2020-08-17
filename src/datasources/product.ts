@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
 
-import { TContext } from '..';
-import { ProductInput } from '../generated/graphql';
+import { TContext } from '../index';
+import { ProductInput } from '~generated/graphql';
 
 class ProductAPI extends DataSource<TContext> {
   private context: TContext | undefined;

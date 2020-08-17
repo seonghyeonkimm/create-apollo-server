@@ -3,3 +3,6 @@ src/generated/*
 
 # graphql schemas
 src/schemas/*
+
+# config
+jest.config.js
