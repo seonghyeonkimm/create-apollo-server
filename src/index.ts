@@ -22,7 +22,14 @@ export type TContext = {
 };
 
 // environment variables
-dotenv.config();
+dotenv.config({
+  path:
+    process.env.NODE_ENV === 'production'
+      ? '.env.production'
+      : process.env.NODE_ENV === 'test'
+      ? '.env.test'
+      : '.env',
+});
 
 const db = createDBConnection();
 
