@@ -1,4 +1,3 @@
-import createOrGetSequelize from './db';
 import {
   DataTypes,
   Model,
@@ -9,8 +8,10 @@ import {
   HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
   Association,
+  Sequelize,
+  ModelStatic,
 } from 'sequelize';
-import Product from './Product';
+import { Product } from './Product';
 
 interface ProductTagAttributes {
   id: number;
@@ -19,7 +20,7 @@ interface ProductTagAttributes {
 
 type ProductTagCreationAttributes = Optional<ProductTagAttributes, 'id'>;
 
-class ProductTag extends Model<
+export class ProductTag extends Model<
   ProductTagAttributes,
   ProductTagCreationAttributes
 > {
@@ -32,7 +33,9 @@ class ProductTag extends Model<
 
   public getProducts!: HasManyGetAssociationsMixin<Product>;
   public addProducts!: HasManyAddAssociationMixin<Product, number>;
+
   public hasProducts!: HasManyHasAssociationMixin<Product, number>;
+
   public countProducts!: HasManyCountAssociationsMixin;
   public createProducts!: HasManyCreateAssociationMixin<Product>;
 
@@ -42,25 +45,35 @@ class ProductTag extends Model<
   public static associations: {
     products: Association<ProductTag, Product>;
   };
+
+  public static associate(models: Record<string, ModelStatic<Model>>) {
+    const { Product } = models;
+
+    ProductTag.belongsToMany(Product, {
+      through: 'ProductTagAssoc',
+    });
+  }
 }
 
-ProductTag.init(
-  {
-    id: {
-      primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER.UNSIGNED,
+export default (sequelize: Sequelize) => {
+  ProductTag.init(
+    {
+      id: {
+        primaryKey: true,
+        autoIncrement: true,
+        type: DataTypes.INTEGER.UNSIGNED,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    {
+      sequelize,
+      paranoid: true,
+      modelName: 'ProductTag',
     },
-  },
-  {
-    sequelize: createOrGetSequelize(),
-    paranoid: true,
-    modelName: 'ProductTag',
-  },
-);
+  );
 
-export default ProductTag;
+  return ProductTag;
+};

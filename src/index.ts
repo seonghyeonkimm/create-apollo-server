@@ -1,8 +1,4 @@
-/* eslint-disable import/first */
 import dotenv from 'dotenv';
-
-// environment variables
-dotenv.config();
 
 import path from 'path';
 import {
@@ -16,12 +12,19 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { addResolversToSchema } from '@graphql-tools/schema';
 
 import resolvers from './resolvers';
-import dataSources from './datasources';
+import createDBConnection, { ModelStaticType } from './models';
+import createDataSources from './datasources';
 
 export type TContext = {
   pubsub: PubSub;
-  dataSources: ReturnType<typeof dataSources>;
+  models: ModelStaticType;
+  dataSources: ReturnType<typeof createDataSources>;
 };
+
+// environment variables
+dotenv.config();
+
+const db = createDBConnection();
 
 const schema = loadSchemaSync(path.join(__dirname, 'schemas/schema.graphql'), {
   loaders: [new GraphQLFileLoader()],
@@ -33,9 +36,10 @@ const schemaWithResolvers = addResolversToSchema({
 });
 
 export const server = new ApolloServer({
-  dataSources,
+  dataSources: createDataSources,
   schema: schemaWithResolvers,
   context: {
+    models: db.models,
     pubsub: new PubSub(),
   },
   engine: {

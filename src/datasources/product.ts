@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
 
 import { TContext } from '..';
-import Product from '../models/Product';
 import { ProductInput } from '../generated/graphql';
-import ProductTag from '../models/ProductTag';
 
 class ProductAPI extends DataSource<TContext> {
   private context: TContext | undefined;
@@ -13,6 +12,7 @@ class ProductAPI extends DataSource<TContext> {
   }
 
   async createProduct(input: ProductInput) {
+    const { Product, ProductTag } = this.context!.models;
     const { name, options, tags } = input;
 
     const newProduct = await Product.create(
@@ -47,6 +47,7 @@ class ProductAPI extends DataSource<TContext> {
   }
 
   async getAllProducts() {
+    const { Product } = this.context!.models;
     const products = await Product.findAll();
     return products;
   }

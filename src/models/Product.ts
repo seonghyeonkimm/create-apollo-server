@@ -1,6 +1,4 @@
-import createOrGetSequelize from './db';
 import {
-  DataTypes,
   Model,
   Optional,
   HasManyGetAssociationsMixin,
@@ -9,9 +7,12 @@ import {
   HasManyCountAssociationsMixin,
   HasManyCreateAssociationMixin,
   Association,
+  Sequelize,
+  DataTypes,
+  ModelStatic,
 } from 'sequelize';
-import ProductOption from './ProductOption';
-import ProductTag from './ProductTag';
+import { ProductTag } from './ProductTag';
+import { ProductOption } from './ProductOption';
 
 interface ProductAttributes {
   id: number;
@@ -20,7 +21,10 @@ interface ProductAttributes {
 
 type ProductCreationAttributes = Optional<ProductAttributes, 'id'>;
 
-class Product extends Model<ProductAttributes, ProductCreationAttributes> {
+export class Product extends Model<
+  ProductAttributes,
+  ProductCreationAttributes
+> {
   public id!: number;
   public name!: string;
 
@@ -29,6 +33,7 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> {
   public readonly deletedAt!: Date;
 
   public getOptions!: HasManyGetAssociationsMixin<ProductOption>;
+
   public addOptions!: HasManyAddAssociationMixin<
     ProductOption,
     number | number[]
@@ -36,12 +41,15 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> {
 
   public countOptions!: HasManyCountAssociationsMixin;
   public hasOption!: HasManyHasAssociationMixin<ProductOption, number>;
+
   public createOption!: HasManyCreateAssociationMixin<ProductOption>;
 
   public getTags!: HasManyGetAssociationsMixin<ProductTag>;
   public addTags!: HasManyAddAssociationMixin<ProductTag, number | number[]>;
+
   public countTags!: HasManyCountAssociationsMixin;
   public hasTag!: HasManyHasAssociationMixin<ProductTag, number>;
+
   public createTag!: HasManyCreateAssociationMixin<ProductTag>;
 
   // association types
@@ -52,40 +60,41 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> {
     options: Association<Product, ProductOption>;
     tags: Association<Product, ProductTag>;
   };
+
+  public static associate(models: Record<string, ModelStatic<Model>>) {
+    const { ProductOption, ProductTag } = models;
+
+    Product.hasMany(ProductOption, {
+      foreignKey: 'productId',
+      as: 'options',
+    });
+
+    Product.belongsToMany(ProductTag, {
+      as: 'tags',
+      through: 'ProductTagAssoc',
+    });
+  }
 }
 
-Product.init(
-  {
-    id: {
-      primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER.UNSIGNED,
+export default (sequelize: Sequelize) => {
+  Product.init(
+    {
+      id: {
+        primaryKey: true,
+        autoIncrement: true,
+        type: DataTypes.INTEGER.UNSIGNED,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    {
+      sequelize,
+      paranoid: true,
+      modelName: 'Product',
     },
-  },
-  {
-    sequelize: createOrGetSequelize(),
-    paranoid: true,
-    modelName: 'Product',
-  },
-);
+  );
 
-// associations
-Product.hasMany(ProductOption, {
-  foreignKey: 'productId',
-  as: 'options',
-});
-
-ProductTag.belongsToMany(Product, {
-  through: 'ProductTagAssoc',
-});
-
-Product.belongsToMany(ProductTag, {
-  as: 'tags',
-  through: 'ProductTagAssoc',
-});
-
-export default Product;
+  return Product;
+};

@@ -1,6 +1,4 @@
-import createOrGetSequelize from './db';
-
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
 interface ProductOptionAttributes {
   id: number;
@@ -10,7 +8,7 @@ interface ProductOptionAttributes {
 
 type ProductOptionCreateAttributes = Optional<ProductOptionAttributes, 'id'>;
 
-class ProductOption extends Model<
+export class ProductOption extends Model<
   ProductOptionAttributes,
   ProductOptionCreateAttributes
 > {
@@ -23,27 +21,29 @@ class ProductOption extends Model<
   public readonly deletedAt!: Date;
 }
 
-ProductOption.init(
-  {
-    id: {
-      primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER.UNSIGNED,
+export default (sequelize: Sequelize) => {
+  ProductOption.init(
+    {
+      id: {
+        primaryKey: true,
+        autoIncrement: true,
+        type: DataTypes.INTEGER.UNSIGNED,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      productId: {
+        allowNull: false,
+        type: DataTypes.INTEGER.UNSIGNED,
+      },
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    {
+      sequelize,
+      paranoid: true,
+      modelName: 'ProductOption',
     },
-    productId: {
-      allowNull: false,
-      type: DataTypes.INTEGER.UNSIGNED,
-    },
-  },
-  {
-    sequelize: createOrGetSequelize(),
-    paranoid: true,
-    modelName: 'ProductOption',
-  },
-);
+  );
 
-export default ProductOption;
+  return ProductOption;
+};
