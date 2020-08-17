@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
 
 import { TContext } from '../index';
