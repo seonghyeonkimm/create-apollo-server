@@ -72,7 +72,7 @@ const main = async () => {
     execSync('yarn sql:migrate', { stdio: 'inherit' });
   }
 
-  // TODO: Remove code which is unnecessary to work new template
+  // TODO: Remove code which is unnecessary to start working on new template
   // TODO: Reset git history and make one
 
   console.log();
