@@ -81,14 +81,17 @@ export const server = new ApolloServer({
   if (process.env.NODE_ENV === 'test') return;
   const pending = await umzug.pending();
   if (pending.length > 0) {
+    console.log();
     console.error(
-      `🚀 ${chalk.red(
+      `${chalk.red(
         `${pending.length} pending migrations`,
-      )} exists. Please migarte before start server`,
+      )} exists. Run ${chalk.green(
+        'yarn sql:migrate',
+      )} before starting server 🚀`,
     );
     return;
   }
 
   const url = await server.listen();
-  console.log(`🚀  Server ready at ${url}`);
+  console.log(`Server ready at ${url} 🚀`);
 })();

@@ -1,5 +1,6 @@
+import chalk from 'chalk';
 import dotenv from 'dotenv';
-import { Sequelize, Dialect } from 'sequelize';
+import { Dialect, Sequelize } from 'sequelize';
 import Umzug from 'umzug';
 import { argv } from 'yargs';
 
@@ -30,6 +31,12 @@ const umzug = new Umzug({
   },
 });
 
+function cmdStatus() {
+  return umzug.pending().then((value) => {
+    return value.map((item) => item.file);
+  });
+}
+
 function cmdMigrate() {
   return umzug.up();
 }
@@ -44,6 +51,14 @@ function cmdUndoMigrate(id?: string | 0) {
   if (!name) throw new Error('Command name should be provided');
 
   switch (name) {
+    case 'status':
+      console.error(
+        `🚀 ${chalk.red(
+          `${pending.length} pending migrations`,
+        )} exists. You can check pending migration filename below`,
+      );
+      console.log(await cmdStatus());
+      return;
     case 'migrate':
       await cmdMigrate();
       return;
