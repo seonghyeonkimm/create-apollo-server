@@ -1,0 +1,38 @@
+{
+  "name": "create-apollo-server",
+  "version": "1.0.0",
+  "description": "create-apollo-server",
+  "keywords": [
+    "apollo",
+    "cli",
+    "server"
+  ],
+  "author": "Seonghyeon Kim <impressor7@gmail.com>",
+  "license": "MIT",
+  "bin": {
+    "create-apollo-server": "./dist/lib/create-apollo-server.js"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seonghyeonkimm/create-apollo-server.git"
+  },
+  "scripts": {
+    "clear": "rm -rf dist",
+    "build": "tsc -p tsconfig.json"
+  },
+  "bugs": {
+    "url": "https://github.com/seonghyeonkimm/create-apollo-server/issues"
+  },
+  "homepage": "https://github.com/seonghyeonkimm/create-apollo-server#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^6.0.0",
+    "inquirer": "^7.3.3"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.2"
+  }
+}
