@@ -21,6 +21,7 @@
     "url": "git+https://github.com/seonghyeonkimm/create-apollo-server.git"
   },
   "scripts": {
+    "start": "ts-node --project ./tsconfig.json ./lib/create-apollo-server.ts",
     "clear": "rm -rf dist",
     "build": "tsc -p tsconfig.json"
   },
@@ -34,6 +35,7 @@
     "inquirer": "^7.3.3"
   },
   "devDependencies": {
+    "ts-node": "^9.0.0",
     "typescript": "^4.0.2"
   },
   "gitHead": "e779a5d8a9f31b6e5cfec3cd815876ac18551eb6"

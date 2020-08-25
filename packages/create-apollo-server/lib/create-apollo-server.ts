@@ -36,18 +36,21 @@ const main = async () => {
 
   const answers = await inquiry();
   const rootPath = path.resolve(projectDir);
-  console.log(`Clone apollo-server template to ${chalk.green(rootPath)} 🖐`);
   execSync(`mkdir ${rootPath}`);
-  execSync(`cd ${rootPath}`);
-  execSync(`npm pack ${TEMPLATE.name}@${TEMPLATE.version}`);
-  execSync(`tar -xvf seonghyeonkimm-cas-template-${TEMPLATE.version}.tgz`);
-  execSync(`mv package/* .`);
+
+  const tgzName = `${TEMPLATE.name.replace('@', '').replace('/', '-')}-${TEMPLATE.version}.tgz`;
+  const execSyncInProjectDir = (cmd: string, options?: Record<string, any>) => execSync(cmd, { cwd: rootPath, ...options });
+  execSyncInProjectDir(`npm pack ${TEMPLATE.name}@${TEMPLATE.version}`, { stdio: 'ignore' });
+  execSyncInProjectDir(`tar -xvf ${tgzName}`, { stdio: 'ignore' });
+
+  execSyncInProjectDir(`mv package/* .`);
+  execSyncInProjectDir(`rm ${tgzName}`)
 
   console.log(`Install ${chalk.green('dependencies')} 🙏`);
-  execSync(`yarn`, { stdio: 'inherit' });
+  execSyncInProjectDir(`yarn`, { stdio: 'inherit' });
 
   console.log(`Generate ${chalk.green('graphql node and resolver types')} 👀`);
-  execSync(`yarn codegen`, { stdio: 'inherit' });
+  execSyncInProjectDir(`yarn codegen`, { stdio: 'inherit' });
 
   console.log(`Generate ${chalk.green('app configuration')} 🛰`);
   const appConfig = generateAppConfig(answers);
@@ -78,12 +81,12 @@ const main = async () => {
   } else {
     // sequelize settings
     console.log(`Migrate database using ${chalk.green('sequelize-cli')} 🚀`);
-    execSync('yarn sql:migrate', { stdio: 'inherit' });
+    execSyncInProjectDir('yarn sql:migrate', { stdio: 'inherit' });
   }
 
-  execSync('git init');
-  execSync('git add .');
-  execSync('git commit -m "Initial Commit"');
+  execSyncInProjectDir('git init');
+  execSyncInProjectDir('git add .');
+  execSyncInProjectDir('git commit -m "Initial Commit"');
 
   console.log();
   console.log(
