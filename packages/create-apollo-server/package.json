@@ -1,6 +1,6 @@
 {
   "name": "@seonghyeonkimm/create-apollo-server",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "create-apollo-server",
   "keywords": [
     "apollo",
@@ -35,8 +35,9 @@
     "inquirer": "^7.3.3"
   },
   "devDependencies": {
+    "@types/inquirer": "^7.3.1",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2"
   },
-  "gitHead": "e779a5d8a9f31b6e5cfec3cd815876ac18551eb6"
+  "gitHead": "27ea2430e8f5161fd9b524d292095691c8153210"
 }
