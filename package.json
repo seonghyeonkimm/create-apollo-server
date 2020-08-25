@@ -1,8 +1,5 @@
 {
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "name": "create-apollo-server",
   "version": "0.0.0",
   "repository": "git@github.com:seonghyeonkimm/create-apollo-server.git",
@@ -10,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
-    "bootstrap": "lerna clean --yes && lerna bootstrap",
+    "bootstrap": "lerna bootstrap",
     "prepack": "yarn bootstrap && yarn build",
     "postpublish": "lerna run clear",
     "lerna:publish": "lerna publish"
