@@ -92,6 +92,6 @@ export const server = new ApolloServer({
     return;
   }
 
-  const url = await server.listen();
+  const { url } = await server.listen();
   console.log(`Server ready at ${url} 🚀`);
 })();

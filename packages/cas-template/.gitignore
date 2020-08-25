@@ -4,5 +4,7 @@ node_modules
 # logs
 yarn-error.log
 
-# build
-dist
+# env
+.env
+.env.test
+.env.production

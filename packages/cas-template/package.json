@@ -1,30 +1,77 @@
 {
   "name": "cas-template",
-  "version": "1.0.0",
-  "description": "Now I’m the model of a modern major general / The venerated Virginian veteran whose men are all / Lining up, to put me up on a pedestal / Writin’ letters to relatives / Embellishin’ my elegance and eloquence / But the elephant is in the room / The truth is in ya face when ya hear the British cannons go / BOOM",
-  "keywords": [],
+  "version": "0.0.0",
+  "repository": "git@github.com:seonghyeonkimm/create-apollo-server.git",
   "author": "Seonghyeon Kim <impressor7@gmail.com>",
   "license": "MIT",
-  "main": "lib/cas-template.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/seonghyeonkimm/create-apollo-server.git"
-  },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "start": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "codegen:watch": "graphql-codegen --config codegen.yml -w",
+    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
+    "test:watch": "yarn run test --watch",
+    "sql:migrate": "ts-node ./migration-commands.ts --name=migrate",
+    "sql:migrate:undo": "ts-node ./migration-commands.ts --name=migrate:undo",
+    "sql:makemigration": "sequelize-cli migration:generate --name",
+    "prisma:start": "nodemon --exec ts-node src/prisma.ts",
+    "prisma:makemigration": "prisma migrate save --experimental",
+    "prisma:migrate": "prisma migrate up --experimental && prisma generate",
+    "prisma:studio": "prisma studio --experimental"
   },
-  "bugs": {
-    "url": "https://github.com/seonghyeonkimm/create-apollo-server/issues"
+  "dependencies": {
+    "@prisma/client": "^2.4.1",
+    "apollo-server": "^2.16.1",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.3.0",
+    "graphql-tools": "^6.0.18",
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.4",
+    "umzug": "^2.3.0"
   },
-  "homepage": "https://github.com/seonghyeonkimm/create-apollo-server#readme"
+  "devDependencies": {
+    "@graphql-codegen/cli": "1.17.8",
+    "@graphql-codegen/introspection": "1.17.8",
+    "@graphql-codegen/typescript": "1.17.8",
+    "@graphql-codegen/typescript-document-nodes": "1.17.8",
+    "@graphql-codegen/typescript-resolvers": "1.17.8",
+    "@prisma/cli": "^2.4.1",
+    "@types/inquirer": "^7.3.0",
+    "@types/jest": "^26.0.9",
+    "@types/node": "^14.0.27",
+    "@types/umzug": "^2.2.3",
+    "@types/validator": "^13.1.0",
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "apollo-server-testing": "^2.16.1",
+    "eslint": "^7.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "eslint-plugin-standard": "^4.0.1",
+    "graphql-request": "^3.0.0",
+    "jest": "^26.4.0",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5",
+    "sequelize-cli": "^6.2.0",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^8.10.2",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.9.7",
+    "yargs": "^15.4.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts}": [
+      "eslint --fix --ext .ts,.js",
+      "yarn test"
+    ]
+  }
 }
