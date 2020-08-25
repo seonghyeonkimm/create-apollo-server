@@ -8,7 +8,13 @@ import packageJSON from '../package.json';
 import inquiry from './inquiry';
 import { generateApolloConfig, generateAppConfig } from './utils';
 
+
 let projectDir: string | undefined;
+const TEMPLATE = {
+  version: '0.0.1',
+  name: '@seonghyeonkimm/cas-template',
+};
+
 const main = async () => {
   const program = new commander.Command(packageJSON.name);
 
@@ -29,12 +35,13 @@ const main = async () => {
   const answers = await inquiry();
   const rootPath = path.resolve(projectDir);
   console.log(`Clone apollo-server template to ${chalk.green(rootPath)} 🖐`);
-  execSync(`git clone ${packageJSON.repository} ${rootPath}`, {
-    stdio: 'inherit',
-  });
+  execSync(`mkdir ${rootPath}`);
+  execSync(`cd ${rootPath}`);
+  execSync(`npm pack ${TEMPLATE.name}@${TEMPLATE.version}`);
+  execSync(`tar -xvf seonghyeonkimm-cas-template-${TEMPLATE.version}.tgz`);
+  execSync(`mv package/* .`);
 
   console.log(`Install ${chalk.green('dependencies')} 🙏`);
-  execSync(`cd ${rootPath}`);
   execSync(`yarn`, { stdio: 'inherit' });
 
   console.log(`Generate ${chalk.green('graphql node and resolver types')} 👀`);
@@ -72,8 +79,9 @@ const main = async () => {
     execSync('yarn sql:migrate', { stdio: 'inherit' });
   }
 
-  // TODO: Remove code which is unnecessary to start working on new template
-  // TODO: Reset git history and make one
+  execSync('git init');
+  execSync('git add .');
+  execSync('git commit -m "Initial Commit"');
 
   console.log();
   console.log(
