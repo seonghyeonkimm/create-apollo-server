@@ -1,6 +1,6 @@
 {
-  "name": "create-apollo-server",
-  "version": "0.0.0",
+  "name": "@seonghyeonkimm/create-apollo-server",
+  "version": "0.0.1",
   "description": "create-apollo-server",
   "keywords": [
     "apollo",
@@ -13,6 +13,7 @@
     "create-apollo-server": "./dist/lib/create-apollo-server.js"
   },
   "publishConfig": {
+    "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "repository": {
@@ -34,5 +35,6 @@
   },
   "devDependencies": {
     "typescript": "^4.0.2"
-  }
+  },
+  "gitHead": "e779a5d8a9f31b6e5cfec3cd815876ac18551eb6"
 }

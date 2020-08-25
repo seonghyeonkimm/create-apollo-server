@@ -1,9 +1,13 @@
 {
-  "name": "cas-template",
-  "version": "0.0.0",
+  "name": "@seonghyeonkimm/cas-template",
+  "version": "0.0.1",
   "repository": "git@github.com:seonghyeonkimm/create-apollo-server.git",
   "author": "Seonghyeon Kim <impressor7@gmail.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "start": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
     "codegen": "graphql-codegen --config codegen.yml",
@@ -73,5 +77,6 @@
       "eslint --fix --ext .ts,.js",
       "yarn test"
     ]
-  }
+  },
+  "gitHead": "e779a5d8a9f31b6e5cfec3cd815876ac18551eb6"
 }
