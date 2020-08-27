@@ -73,6 +73,7 @@ export default (sequelize: Sequelize) => {
       sequelize,
       paranoid: true,
       modelName: 'ProductTag',
+      freezeTableName: true,
     },
   );
 

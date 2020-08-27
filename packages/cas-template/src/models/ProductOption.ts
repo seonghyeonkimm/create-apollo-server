@@ -42,6 +42,7 @@ export default (sequelize: Sequelize) => {
       sequelize,
       paranoid: true,
       modelName: 'ProductOption',
+      freezeTableName: true,
     },
   );
 

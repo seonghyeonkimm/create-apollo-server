@@ -4,7 +4,7 @@ module.exports = {
   async up(queryInterface, { DataTypes }) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('Products', {
+      await queryInterface.createTable('Product', {
         id: {
           primaryKey: true,
           autoIncrement: true,
@@ -19,7 +19,7 @@ module.exports = {
         deletedAt: DataTypes.DATE,
       });
 
-      await queryInterface.createTable('ProductOptions', {
+      await queryInterface.createTable('ProductOption', {
         id: {
           primaryKey: true,
           autoIncrement: true,
@@ -34,7 +34,7 @@ module.exports = {
           type: DataTypes.INTEGER.UNSIGNED,
           references: {
             key: 'id',
-            model: 'Products',
+            model: 'Product',
           },
         },
         createdAt: DataTypes.DATE,
@@ -42,7 +42,7 @@ module.exports = {
         deletedAt: DataTypes.DATE,
       });
 
-      await queryInterface.createTable('ProductTags', {
+      await queryInterface.createTable('ProductTag', {
         id: {
           primaryKey: true,
           autoIncrement: true,
@@ -63,7 +63,7 @@ module.exports = {
           type: DataTypes.INTEGER.UNSIGNED,
           references: {
             key: 'id',
-            model: 'Products',
+            model: 'Product',
           },
         },
         ProductTagId: {
@@ -71,7 +71,7 @@ module.exports = {
           type: DataTypes.INTEGER.UNSIGNED,
           references: {
             key: 'id',
-            model: 'ProductTags',
+            model: 'ProductTag',
           },
         },
         createdAt: DataTypes.DATE,
@@ -87,9 +87,9 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.dropTable('ProductTagAssoc');
-      await queryInterface.dropTable('ProductTags');
-      await queryInterface.dropTable('ProductOptions');
-      await queryInterface.dropTable('Products');
+      await queryInterface.dropTable('ProductTag');
+      await queryInterface.dropTable('ProductOption');
+      await queryInterface.dropTable('Product');
       await transaction.commit();
     } catch (err) {
       await transaction.rollback();
