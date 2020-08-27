@@ -7,7 +7,7 @@ generates:
       scalars:
         ID: number
       useIndexSignature: true
-      contextType: '../index#TContext'
+      contextType: '../server#TContext'
     plugins:
       - "typescript"
       - "typescript-resolvers"
