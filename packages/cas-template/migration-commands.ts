@@ -4,14 +4,7 @@ import { Dialect, Sequelize } from 'sequelize';
 import Umzug from 'umzug';
 import { argv } from 'yargs';
 
-dotenv.config({
-  path:
-    process.env.NODE_ENV === 'production'
-      ? '.env.production'
-      : process.env.NODE_ENV === 'test'
-      ? '.env.test'
-      : '.env',
-});
+dotenv.config();
 
 const sequelize = new Sequelize({
   host: process.env.DATABASE_HOST,
