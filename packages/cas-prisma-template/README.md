@@ -1,3 +1,3 @@
-# `cas-template`
+# `cas-prisma-template`
 
-> Default creact-apollo-server template
+> Prisma creact-apollo-server template
