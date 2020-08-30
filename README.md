@@ -12,6 +12,7 @@ npm i -g @seonghyeonkimm/create-apollo-server
 
 ## Create Template
 
+- You can choose **Mysql** or **Postgresql** as your database
 - You can choose [**Prisma**](https://www.prisma.io/docs/) or [**Sequelize**](https://sequelize.org/master/) for your orm
 
 ```shellscript
