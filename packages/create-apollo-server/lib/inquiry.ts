@@ -1,4 +1,5 @@
 import inquirer, { QuestionCollection } from 'inquirer';
+import { ParamsType } from './utils';
 
 export default async () => {
   return inquirer.prompt(questions).then((answers) => {
@@ -11,7 +12,7 @@ const questions = [
     type: 'list',
     name: 'dbDialect',
     message: 'Choose database dialect which you will use for this project',
-    choices: ['mysql'],
+    choices: ['postgresql', 'mysql'],
   },
   {
     type: 'input',
@@ -59,12 +60,4 @@ const questions = [
       return usePrisma;
     },
   },
-] as QuestionCollection<{
-  dbDialect: 'mysql';
-  dbHost: string;
-  dbName: string;
-  dbUsername: string;
-  dbPassword: string;
-  usePrisma: boolean;
-  apolloKey: string;
-}>;
+] as QuestionCollection<ParamsType>;

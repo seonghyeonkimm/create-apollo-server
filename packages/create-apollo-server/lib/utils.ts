@@ -1,5 +1,5 @@
-type ParamsType = {
-  dbDialect: 'mysql';
+export type ParamsType = {
+  dbDialect: 'mysql' | 'postgresql';
   dbHost: string;
   dbName: string;
   dbUsername: string;
@@ -19,8 +19,9 @@ DATABASE_DIALECT=${answers.dbDialect}
 };
 
 export const generatePrismaConfig = (answers: ParamsType) => {
+  const port = answers.dbDialect === 'postgresql' ? '5432' : '3306';
   return `# database
-DATABASE_URL=${answers.dbDialect}://${answers.dbUsername}${answers.dbPassword ? `:${answers.dbPassword}` : ''}@${answers.dbHost}:3306/${answers.dbName}
+DATABASE_URL=${answers.dbDialect}://${answers.dbUsername}${answers.dbPassword ? `:${answers.dbPassword}` : ''}@${answers.dbHost}:${port}/${answers.dbName}
 `;
 };
 

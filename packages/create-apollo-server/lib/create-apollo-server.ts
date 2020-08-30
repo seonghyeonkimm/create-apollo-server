@@ -13,12 +13,12 @@ import { generateApolloConfig, generateAppConfig, generatePrismaConfig, generate
 
 let projectDir: string | undefined;
 const DEFAULT_TEMPLATE = {
-  version: '0.0.6',
+  version: '0.0.7',
   name: '@seonghyeonkimm/cas-template',
 };
 
 const PRIMSA_TEMPLATE = {
-  version: '0.0.4',
+  version: '0.0.5',
   name: '@seonghyeonkimm/cas-prisma-template',
 };
 
@@ -60,6 +60,15 @@ const main = async () => {
   console.log(`Installing ${chalk.green('dependencies')} 🙏`);
   execSyncInProjectDir(`yarn`, { stdio: 'inherit' });
 
+  if (!answers.usePrisma) {
+    switch (answers.dbDialect) {
+      case 'postgresql':
+        execSyncInProjectDir(`yarn add pg pg-hstore`, { stdio: "inherit" });
+      default:
+        execSyncInProjectDir(`yarn add mysql2`, { stdio: 'inherit' });
+    }
+  }
+
   console.log(`Generating ${chalk.green('graphql node and resolver types')} 👀`);
   execSyncInProjectDir(`yarn codegen`, { stdio: 'inherit' });
 
@@ -67,6 +76,14 @@ const main = async () => {
   fs.writeFileSync(path.join(rootPath, '.env'), '');
 
   if (answers.usePrisma) {
+    if (answers.dbDialect === 'postgresql') {
+      execSyncInProjectDir(`rm ./prisma/schema.mysql.prisma`);
+    } else {
+      execSyncInProjectDir(`mv ./prisma/schema.mysql.prisma ./prisma/schema.prisma`);
+    }
+
+    console.log(`Generating ${chalk.green('Prisma')} migrations 🌝`);
+    execSyncInProjectDir(`yarn makemigration --name init-tables`);
     await new Promise((resolve) =>
       fs.appendFile(
         path.join(rootPath, '.env'),
