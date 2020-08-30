@@ -95,9 +95,9 @@ const main = async () => {
   console.log(`Migrate database using ${chalk.green(ormName)} 🚀`);
   execSyncInProjectDir('yarn migrate', { stdio: 'inherit' });
 
-  execSyncInProjectDir('git init');
-  execSyncInProjectDir('git add .');
-  execSyncInProjectDir('git commit -m "Initial commit by create-apollo-server script"');
+  execSyncInProjectDir('git init', { stdio: 'inherit' });
+  execSyncInProjectDir('git add .', { stdio: 'inherit' });
+  execSyncInProjectDir('git commit -m "Initial commit by create-apollo-server script"', { stdio: 'inherit' });
 
   console.log();
   console.log(
