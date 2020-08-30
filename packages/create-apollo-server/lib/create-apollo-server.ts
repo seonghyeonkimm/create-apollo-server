@@ -61,6 +61,7 @@ const main = async () => {
   execSyncInProjectDir(`yarn`, { stdio: 'inherit' });
 
   if (!answers.usePrisma) {
+    execSyncInProjectDir(`yarn remove pg pg-hstore mysql2`, { stdio: "inherit" });
     switch (answers.dbDialect) {
       case 'postgresql':
         execSyncInProjectDir(`yarn add pg pg-hstore`, { stdio: "inherit" });
