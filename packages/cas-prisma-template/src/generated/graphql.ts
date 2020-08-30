@@ -6,7 +6,7 @@ export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K]
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: number;
+  ID: string;
   String: string;
   Boolean: boolean;
   Int: number;
@@ -20,7 +20,7 @@ export type Query = {
 
 export type Product = {
   __typename?: 'Product';
-  id: Scalars['ID'];
+  id: Scalars['Int'];
   name: Scalars['String'];
   tags?: Maybe<Array<Tag>>;
   options?: Maybe<Array<ProductOption>>;
@@ -28,15 +28,15 @@ export type Product = {
 
 export type Tag = {
   __typename?: 'Tag';
-  id: Scalars['ID'];
+  id: Scalars['Int'];
   name: Scalars['String'];
 };
 
 export type ProductOption = {
   __typename?: 'ProductOption';
-  id: Scalars['ID'];
+  id: Scalars['Int'];
   name: Scalars['String'];
-  productId: Scalars['ID'];
+  productId: Scalars['Int'];
 };
 
 export type Mutation = {
@@ -56,14 +56,14 @@ export type ProductInput = {
 };
 
 export type TagInput = {
-  id?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['Int']>;
   name: Scalars['String'];
 };
 
 export type ProductOptionInput = {
-  id?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['Int']>;
   name: Scalars['String'];
-  productId?: Maybe<Scalars['ID']>;
+  productId?: Maybe<Scalars['Int']>;
 };
 
 export type Subscription = {
@@ -152,7 +152,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   Product: ResolverTypeWrapper<Product>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Tag: ResolverTypeWrapper<Tag>;
   ProductOption: ResolverTypeWrapper<ProductOption>;
@@ -168,7 +168,7 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Query: {};
   Product: Product;
-  ID: Scalars['ID'];
+  Int: Scalars['Int'];
   String: Scalars['String'];
   Tag: Tag;
   ProductOption: ProductOption;
@@ -185,7 +185,7 @@ export type QueryResolvers<ContextType = TContext, ParentType extends ResolversP
 }>;
 
 export type ProductResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tags?: Resolver<Maybe<Array<ResolversTypes['Tag']>>, ParentType, ContextType>;
   options?: Resolver<Maybe<Array<ResolversTypes['ProductOption']>>, ParentType, ContextType>;
@@ -193,15 +193,15 @@ export type ProductResolvers<ContextType = TContext, ParentType extends Resolver
 }>;
 
 export type TagResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 
 export type ProductOptionResolvers<ContextType = TContext, ParentType extends ResolversParentTypes['ProductOption'] = ResolversParentTypes['ProductOption']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  productId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  productId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 

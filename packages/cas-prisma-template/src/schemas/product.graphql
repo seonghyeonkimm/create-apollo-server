@@ -1,30 +1,30 @@
 type ProductOption {
-  id: ID!
+  id: Int!
   name: String!
-  productId: ID!
+  productId: Int!
 }
 
 type Tag {
-  id: ID!
+  id: Int!
   name: String!
 }
 
 type Product {
-  id: ID!
+  id: Int!
   name: String!
   tags: [Tag!]
   options: [ProductOption!]
 }
 
 input ProductOptionInput {
-  id: ID
+  id: Int
   name: String!
-  productId: ID
+  productId: Int
 }
 
 
 input TagInput {
-  id: ID
+  id: Int
   name: String!
 }
 
