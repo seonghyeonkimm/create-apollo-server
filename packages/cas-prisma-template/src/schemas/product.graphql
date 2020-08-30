@@ -1,0 +1,35 @@
+type ProductOption {
+  id: ID!
+  name: String!
+  productId: ID!
+}
+
+type Tag {
+  id: ID!
+  name: String!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  tags: [Tag!]
+  options: [ProductOption!]
+}
+
+input ProductOptionInput {
+  id: ID
+  name: String!
+  productId: ID
+}
+
+
+input TagInput {
+  id: ID
+  name: String!
+}
+
+input ProductInput {
+  name: String!
+  tags: [TagInput!]
+  options: [ProductOptionInput!]
+}

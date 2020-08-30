@@ -1,0 +1,13 @@
+# import "product.graphql"
+
+type Query {
+  products: [Product]!
+}
+
+type Mutation {
+  createProduct(input: ProductInput): Product!
+}
+
+type Subscription {
+  productAdded: Product!
+}

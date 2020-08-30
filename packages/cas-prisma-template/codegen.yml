@@ -1,0 +1,18 @@
+overwrite: true
+schema: "src/schemas/schema.graphql"
+documents: null
+generates:
+  src/generated/graphql.ts:
+    config:
+      scalars:
+        ID: number
+      useIndexSignature: true
+      contextType: '../server#TContext'
+      maybeValue: T | undefined
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+      - "typescript-document-nodes"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
