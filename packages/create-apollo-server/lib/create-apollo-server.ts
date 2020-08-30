@@ -83,8 +83,6 @@ const main = async () => {
       execSyncInProjectDir(`mv ./prisma/schema.mysql.prisma ./prisma/schema.prisma`);
     }
 
-    console.log(`Generating ${chalk.green('Prisma')} migrations 🌝`);
-    execSyncInProjectDir(`yarn makemigration --name init-tables`);
     await new Promise((resolve) =>
       fs.appendFile(
         path.join(rootPath, '.env'),
@@ -92,6 +90,9 @@ const main = async () => {
         resolve,
       ),
     );
+
+    console.log(`Generating ${chalk.green('Prisma')} migrations 🌝`);
+    execSyncInProjectDir(`yarn makemigration --name init-tables`);
   } else {
     await new Promise((resolve) =>
       fs.appendFile(
