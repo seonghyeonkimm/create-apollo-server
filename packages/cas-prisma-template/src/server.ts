@@ -21,14 +21,7 @@ export type TContext = {
 };
 
 // environment variables
-dotenv.config({
-  path:
-    process.env.NODE_ENV === 'production'
-      ? '.env.production'
-      : process.env.NODE_ENV === 'test'
-      ? '.env.test'
-      : '.env',
-});
+dotenv.config();
 
 const prisma = new PrismaClient();
 

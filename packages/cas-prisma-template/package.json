@@ -14,9 +14,9 @@
     "codegen:watch": "graphql-codegen --config codegen.yml -w",
     "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
     "test:watch": "yarn run test --watch",
-    "makemigration": "prisma migrate save --experimental",
-    "migrate": "prisma migrate up --experimental && prisma generate",
-    "studio": "prisma studio --experimental"
+    "makemigration": "dotenv -e .env -- prisma migrate save --experimental",
+    "migrate": "dotenv -e .env -- prisma migrate up --experimental && prisma generate",
+    "studio": "dotenv -e .env -- prisma studio --experimental"
   },
   "dependencies": {
     "@prisma/client": "^2.4.1",
@@ -37,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^3.9.0",
     "@typescript-eslint/parser": "^3.9.0",
     "apollo-server-testing": "^2.17.0",
+    "dotenv-cli": "^3.2.0",
     "eslint": "^7.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
