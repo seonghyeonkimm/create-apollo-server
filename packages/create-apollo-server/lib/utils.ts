@@ -29,3 +29,15 @@ export const generateApolloConfig = (apolloKey: string) => {
 # apollo
 APOLLO_KEY=${apolloKey}`;
 };
+
+
+export const generateGitignore = () => {
+  return `# packages
+node_modules
+
+# logs
+yarn-error.log
+
+# env
+.env`;
+};

@@ -8,17 +8,17 @@ import path from 'path';
 
 import packageJSON from '../package.json';
 import inquiry from './inquiry';
-import { generateApolloConfig, generateAppConfig, generatePrismaConfig } from './utils';
+import { generateApolloConfig, generateAppConfig, generatePrismaConfig, generateGitignore } from './utils';
 
 
 let projectDir: string | undefined;
 const DEFAULT_TEMPLATE = {
-  version: '0.0.4',
+  version: '0.0.6',
   name: '@seonghyeonkimm/cas-template',
 };
 
 const PRIMSA_TEMPLATE = {
-  version: '0.0.2',
+  version: '0.0.4',
   name: '@seonghyeonkimm/cas-prisma-template',
 };
 
@@ -42,7 +42,7 @@ const main = async () => {
 
   const answers = await inquiry();
   const rootPath = path.resolve(projectDir);
-  console.log(`Make folder in provided path 🏠`);
+  console.log(`Making folder in provided path 🏠`);
   execSync(`mkdir ${rootPath}`);
 
   const execSyncInProjectDir = (cmd: string, options?: Record<string, any>) => execSync(cmd, { cwd: rootPath, ...options });
@@ -57,13 +57,13 @@ const main = async () => {
   execSyncInProjectDir(`mv package/* .`);
   execSyncInProjectDir(`rm ${tgzName}`)
 
-  console.log(`Install ${chalk.green('dependencies')} 🙏`);
+  console.log(`Installing ${chalk.green('dependencies')} 🙏`);
   execSyncInProjectDir(`yarn`, { stdio: 'inherit' });
 
-  console.log(`Generate ${chalk.green('graphql node and resolver types')} 👀`);
+  console.log(`Generating ${chalk.green('graphql node and resolver types')} 👀`);
   execSyncInProjectDir(`yarn codegen`, { stdio: 'inherit' });
 
-  console.log(`Generate ${chalk.green('app configuration')} 🛰`);
+  console.log(`Generating ${chalk.green('app configuration')} 🛰`);
   fs.writeFileSync(path.join(rootPath, '.env'), '');
 
   if (answers.usePrisma) {
@@ -92,9 +92,11 @@ const main = async () => {
   }
 
   const ormName = answers.usePrisma ? 'prisma' : 'sequelize-cli'
-  console.log(`Migrate database using ${chalk.green(ormName)} 🚀`);
+  console.log(`Migrating database using ${chalk.green(ormName)} 🚀`);
   execSyncInProjectDir('yarn migrate', { stdio: 'inherit' });
 
+  console.log(`Making Initial Commit ${chalk.green(ormName)} 🚀`);
+  fs.writeFileSync(path.join(rootPath, '.gitignore'), generateGitignore());
   execSyncInProjectDir('git init', { stdio: 'inherit' });
   execSyncInProjectDir('git add .', { stdio: 'inherit' });
   execSyncInProjectDir('git commit -m "Initial commit by create-apollo-server script"', { stdio: 'inherit' });
