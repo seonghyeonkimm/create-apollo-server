@@ -85,9 +85,7 @@ export const server = new ApolloServer({
     console.error(
       `${chalk.red(
         `${pending.length} pending migrations`,
-      )} exists. Run ${chalk.green(
-        'yarn sql:migrate',
-      )} before starting server 🚀`,
+      )} exists. Run ${chalk.green('yarn migrate')} before starting server 🚀`,
     );
     return;
   }
