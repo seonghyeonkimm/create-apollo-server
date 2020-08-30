@@ -8,14 +8,20 @@ import path from 'path';
 
 import packageJSON from '../package.json';
 import inquiry from './inquiry';
-import { generateApolloConfig, generateAppConfig } from './utils';
+import { generateApolloConfig, generateAppConfig, generatePrismaConfig } from './utils';
 
 
 let projectDir: string | undefined;
-const TEMPLATE = {
-  version: '0.0.2',
+const DEFAULT_TEMPLATE = {
+  version: '0.0.3',
   name: '@seonghyeonkimm/cas-template',
 };
+
+const PRIMSA_TEMPLATE = {
+  version: '0.0.1',
+  name: '@seonghyeonkimm/cas-prisma-template',
+};
+
 
 const main = async () => {
   const program = new commander.Command(packageJSON.name);
@@ -38,9 +44,10 @@ const main = async () => {
   const rootPath = path.resolve(projectDir);
   execSync(`mkdir ${rootPath}`);
 
-  const tgzName = `${TEMPLATE.name.replace('@', '').replace('/', '-')}-${TEMPLATE.version}.tgz`;
   const execSyncInProjectDir = (cmd: string, options?: Record<string, any>) => execSync(cmd, { cwd: rootPath, ...options });
-  execSyncInProjectDir(`npm pack ${TEMPLATE.name}@${TEMPLATE.version}`, { stdio: 'ignore' });
+  const template = answers.usePrisma ? PRIMSA_TEMPLATE : DEFAULT_TEMPLATE;
+  const tgzName = `${template.name.replace('@', '').replace('/', '-')}-${template.version}.tgz`;
+  execSyncInProjectDir(`npm pack ${template.name}@${template.version}`, { stdio: 'ignore' });
   execSyncInProjectDir(`tar -xvf ${tgzName}`, { stdio: 'ignore' });
 
   execSyncInProjectDir(`mv package/* .`);
@@ -53,40 +60,40 @@ const main = async () => {
   execSyncInProjectDir(`yarn codegen`, { stdio: 'inherit' });
 
   console.log(`Generate ${chalk.green('app configuration')} 🛰`);
-  const appConfig = generateAppConfig(answers);
-  fs.writeFileSync(path.join(rootPath, '.env'), appConfig.dev);
-  fs.writeFileSync(path.join(rootPath, '.env.test'), appConfig.test);
-  fs.writeFileSync(
-    path.join(rootPath, '.env.production'),
-    appConfig.production,
-  );
+  fs.writeFileSync(path.join(rootPath, '.env'), '');
+
+  if (answers.usePrisma) {
+    await new Promise((resolve) =>
+      fs.appendFile(
+        path.join(rootPath, '.env'),
+        generatePrismaConfig(answers),
+        resolve,
+      ),
+    );
+  } else {
+    await new Promise((resolve) =>
+      fs.appendFile(
+        path.join(rootPath, '.env'),
+        generateAppConfig(answers),
+        resolve,
+      ),
+    );
+  }
 
   if (answers.apolloKey) {
     const apolloConfig = generateApolloConfig(answers.apolloKey);
     await new Promise((resolve) =>
       fs.appendFile(path.join(rootPath, '.env'), apolloConfig, resolve),
     );
-    await new Promise((resolve) =>
-      fs.appendFile(
-        path.join(rootPath, '.env.production'),
-        apolloConfig,
-        resolve,
-      ),
-    );
   }
 
-  if (answers.usePrisma) {
-    // TODO: prisma init and generate config
-    // TODO: prisma datasources
-  } else {
-    // sequelize settings
-    console.log(`Migrate database using ${chalk.green('sequelize-cli')} 🚀`);
-    execSyncInProjectDir('yarn sql:migrate', { stdio: 'inherit' });
-  }
+  const ormName = answers.usePrisma ? 'prisma' : 'sequelize-cli'
+  console.log(`Migrate database using ${chalk.green(ormName)} 🚀`);
+  execSyncInProjectDir('yarn migrate', { stdio: 'inherit' });
 
   execSyncInProjectDir('git init');
   execSyncInProjectDir('git add .');
-  execSyncInProjectDir('git commit -m "Initial Commit"');
+  execSyncInProjectDir('git commit -m "Initial commit by create-apollo-server script"');
 
   console.log();
   console.log(

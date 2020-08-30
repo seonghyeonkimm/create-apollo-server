@@ -9,29 +9,19 @@ type ParamsType = {
 };
 
 export const generateAppConfig = (answers: ParamsType) => {
-  return {
-    dev: `# database
+  return `# database
 DATABASE_HOST=${answers.dbHost}
 DATABASE_NAME=${answers.dbName}-dev
 DATABASE_USERNAME=${answers.dbUsername}
 DATABASE_PASSWORD=${answers.dbPassword}
 DATABASE_DIALECT=${answers.dbDialect}
-`,
-    test: `# database
-DATABASE_HOST=${answers.dbHost}
-DATABASE_NAME=${answers.dbName}-test
-DATABASE_USERNAME=${answers.dbUsername}
-DATABASE_PASSWORD=${answers.dbPassword}
-DATABASE_DIALECT=${answers.dbDialect}
-`,
-    production: `# database
-DATABASE_HOST=${answers.dbHost}
-DATABASE_NAME=${answers.dbName}-production
-DATABASE_USERNAME=${answers.dbUsername}
-DATABASE_PASSWORD=${answers.dbPassword}
-DATABASE_DIALECT=${answers.dbDialect}
-`,
-  };
+`;
+};
+
+export const generatePrismaConfig = (answers: ParamsType) => {
+  return `# database
+DATABASE_URL=${answers.dbDialect}://${answers.dbUsername}${answers.dbPassword ? `:${answers.dbPassword}` : ''}@${answers.dbHost}:3306/${answers.dbName}
+`;
 };
 
 export const generateApolloConfig = (apolloKey: string) => {
