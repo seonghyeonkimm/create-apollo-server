@@ -13,12 +13,12 @@ import { generateApolloConfig, generateAppConfig, generatePrismaConfig } from '.
 
 let projectDir: string | undefined;
 const DEFAULT_TEMPLATE = {
-  version: '0.0.3',
+  version: '0.0.4',
   name: '@seonghyeonkimm/cas-template',
 };
 
 const PRIMSA_TEMPLATE = {
-  version: '0.0.1',
+  version: '0.0.2',
   name: '@seonghyeonkimm/cas-prisma-template',
 };
 
@@ -42,11 +42,15 @@ const main = async () => {
 
   const answers = await inquiry();
   const rootPath = path.resolve(projectDir);
+  console.log(`Make folder in provided path 🏠`);
   execSync(`mkdir ${rootPath}`);
 
   const execSyncInProjectDir = (cmd: string, options?: Record<string, any>) => execSync(cmd, { cwd: rootPath, ...options });
   const template = answers.usePrisma ? PRIMSA_TEMPLATE : DEFAULT_TEMPLATE;
   const tgzName = `${template.name.replace('@', '').replace('/', '-')}-${template.version}.tgz`;
+
+  console.log();
+  console.log(`Downloading ${chalk.green(template.name)} 👊`);
   execSyncInProjectDir(`npm pack ${template.name}@${template.version}`, { stdio: 'ignore' });
   execSyncInProjectDir(`tar -xvf ${tgzName}`, { stdio: 'ignore' });
 
@@ -99,6 +103,8 @@ const main = async () => {
   console.log(
     `Done. start to build your own ${chalk.green('apollo-server')} 🏠`,
   );
+
+  process.exit(0);
 };
 
 main();

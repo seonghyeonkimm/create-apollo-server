@@ -26,7 +26,7 @@ const questions = [
     name: 'dbName',
     message: "What's your database name?",
     default: () => {
-      return 'cas';
+      return 'cas-dev';
     },
   },
   {

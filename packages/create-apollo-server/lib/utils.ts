@@ -11,7 +11,7 @@ type ParamsType = {
 export const generateAppConfig = (answers: ParamsType) => {
   return `# database
 DATABASE_HOST=${answers.dbHost}
-DATABASE_NAME=${answers.dbName}-dev
+DATABASE_NAME=${answers.dbName}
 DATABASE_USERNAME=${answers.dbUsername}
 DATABASE_PASSWORD=${answers.dbPassword}
 DATABASE_DIALECT=${answers.dbDialect}
