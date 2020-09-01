@@ -54,8 +54,8 @@ const main = async () => {
   execSyncInProjectDir(`npm pack ${template.name}@${template.version}`, { stdio: 'ignore' });
   execSyncInProjectDir(`tar -xvf ${tgzName}`, { stdio: 'ignore' });
 
-  execSyncInProjectDir(`mv package/* .`);
-  execSyncInProjectDir(`rm ${tgzName}`)
+  execSyncInProjectDir(`mv package/* package/.* .`);
+  execSyncInProjectDir(`rm -rf ${tgzName} package`)
 
   console.log(`Installing ${chalk.green('dependencies')} 🙏`);
   execSyncInProjectDir(`yarn`, { stdio: 'inherit' });
