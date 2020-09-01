@@ -15,7 +15,7 @@ model ProductOption {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
-  products  Product   @relation(fields: [productId], references: [id])
+  product  Product   @relation(fields: [productId], references: [id])
 
   @@index([productId], name: "productId")
 }
