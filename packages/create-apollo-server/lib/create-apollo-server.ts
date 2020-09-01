@@ -54,7 +54,7 @@ const main = async () => {
   execSyncInProjectDir(`npm pack ${template.name}@${template.version}`, { stdio: 'ignore' });
   execSyncInProjectDir(`tar -xvf ${tgzName}`, { stdio: 'ignore' });
 
-  execSyncInProjectDir(`cp -r package/* package/.* .`);
+  execSyncInProjectDir(`cp -r package/. .`);
   execSyncInProjectDir(`rm -rf ${tgzName} package`)
 
   console.log(`Installing ${chalk.green('dependencies')} 🙏`);
