@@ -49,7 +49,9 @@
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "eslint-plugin-standard": "^4.0.1",
     "graphql-request": "^3.0.0",
+    "husky": "^4.2.5",
     "jest": "^26.4.0",
+    "lint-staged": "^10.2.13",
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.4",
     "pg": "^8.3.3",
@@ -69,8 +71,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,ts}": [
-      "eslint --fix --ext .ts,.js",
-      "yarn test"
+      "eslint --fix --ext .ts,.js"
     ]
   },
   "gitHead": "27ea2430e8f5161fd9b524d292095691c8153210"
