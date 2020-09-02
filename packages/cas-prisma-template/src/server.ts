@@ -23,7 +23,12 @@ export type TContext = {
 // environment variables
 dotenv.config();
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  log:
+    process.env.NODE_ENV === 'production'
+      ? undefined
+      : ['query', 'info', 'warn', 'error'],
+});
 
 const schema = loadSchemaSync(path.join(__dirname, 'schemas/schema.graphql'), {
   loaders: [new GraphQLFileLoader()],
