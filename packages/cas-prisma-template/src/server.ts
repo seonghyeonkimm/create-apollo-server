@@ -12,6 +12,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 import createDataSources from './datasources';
+import createPlugins from './plugins';
 import resolvers from './resolvers';
 
 export type TContext = {
@@ -40,8 +41,9 @@ const schemaWithResolvers = addResolversToSchema({
 });
 
 export const server = new ApolloServer({
-  dataSources: createDataSources,
+  plugins: createPlugins(),
   schema: schemaWithResolvers,
+  dataSources: createDataSources,
   context: {
     prisma,
     pubsub: new PubSub(),
