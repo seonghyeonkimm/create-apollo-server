@@ -14,6 +14,7 @@ import Umzug from 'umzug';
 
 import createDataSources from './datasources';
 import createDBConnection, { ModelStaticType } from './models';
+import createPlugins from './plugins';
 import resolvers from './resolvers';
 
 export type TContext = {
@@ -48,6 +49,7 @@ const schemaWithResolvers = addResolversToSchema({
 });
 
 export const server = new ApolloServer({
+  plugins: createPlugins(),
   dataSources: createDataSources,
   schema: schemaWithResolvers,
   context: {
