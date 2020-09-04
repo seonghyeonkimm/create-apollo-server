@@ -13,12 +13,12 @@ import { generateApolloConfig, generateAppConfig, generatePrismaConfig, generate
 
 let projectDir: string | undefined;
 const DEFAULT_TEMPLATE = {
-  version: '0.0.8',
+  version: '0.0.9',
   name: '@seonghyeonkimm/cas-template',
 };
 
 const PRIMSA_TEMPLATE = {
-  version: '0.0.6',
+  version: '0.0.7',
   name: '@seonghyeonkimm/cas-prisma-template',
 };
 
