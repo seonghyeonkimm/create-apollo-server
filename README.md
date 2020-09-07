@@ -18,7 +18,7 @@ npm i -g @seonghyeonkimm/create-apollo-server
 yarn add @seonghyeonkimm/create-apollo-server
 ```
 
-## Create Template
+## How to create your own apollo-server
 
 * You can choose **Mysql** or **Postgresql** as your database
 * You can choose [**Prisma**](https://www.prisma.io/docs/) or [**Sequelize**](https://sequelize.org/master/) for your orm
@@ -26,4 +26,11 @@ yarn add @seonghyeonkimm/create-apollo-server
 ```shellscript
 # follow the inquries from cli
 create-apollo-server <YOUR_APP_FOLDER_PATH>
+```
+
+## How to start development server
+
+```shellscript
+# start development server
+pm2 start ecosystem.config.js --only "server-dev"
 ```
