@@ -9,7 +9,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "start": "nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
+    "start": "ts-node -r tsconfig-paths/register src/server.ts",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml -w",
     "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
@@ -55,7 +55,6 @@
     "jest": "^26.4.0",
     "lint-staged": "^10.2.13",
     "mysql2": "^2.1.0",
-    "nodemon": "^2.0.4",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
     "prettier": "^2.0.5",
