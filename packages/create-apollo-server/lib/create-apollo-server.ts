@@ -13,12 +13,12 @@ import { generateApolloConfig, generateAppConfig, generatePrismaConfig, generate
 
 let projectDir: string | undefined;
 const DEFAULT_TEMPLATE = {
-  version: '0.0.9',
+  version: '0.0.10',
   name: '@seonghyeonkimm/cas-template',
 };
 
 const PRIMSA_TEMPLATE = {
-  version: '0.0.8',
+  version: '0.0.9',
   name: '@seonghyeonkimm/cas-prisma-template',
 };
 
@@ -60,6 +60,9 @@ const main = async () => {
   console.log(`Installing ${chalk.green('dependencies')} 🙏`);
   execSyncInProjectDir(`yarn`, { stdio: 'inherit' });
 
+  console.log(`Generating ${chalk.green('app configuration')} 🛰`);
+  fs.writeFileSync(path.join(rootPath, '.env'), '');
+
   if (!answers.usePrisma) {
     execSyncInProjectDir(`yarn remove pg pg-hstore mysql2`, { stdio: "inherit" });
     switch (answers.dbDialect) {
@@ -68,13 +71,10 @@ const main = async () => {
       default:
         execSyncInProjectDir(`yarn add mysql2`, { stdio: 'inherit' });
     }
+
+    console.log(`Generating ${chalk.green('graphql node and resolver types')} 👀`);
+    execSyncInProjectDir(`yarn codegen`, { stdio: 'inherit' });
   }
-
-  console.log(`Generating ${chalk.green('graphql node and resolver types')} 👀`);
-  execSyncInProjectDir(`yarn codegen`, { stdio: 'inherit' });
-
-  console.log(`Generating ${chalk.green('app configuration')} 🛰`);
-  fs.writeFileSync(path.join(rootPath, '.env'), '');
 
   if (answers.usePrisma) {
     if (answers.dbDialect === 'postgresql') {
