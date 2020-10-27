@@ -32,5 +32,5 @@ create-apollo-server <YOUR_APP_FOLDER_PATH>
 
 ```shellscript
 # start development server
-pm2 start ecosystem.config.js --only "server-dev"
+yarn start
 ```
