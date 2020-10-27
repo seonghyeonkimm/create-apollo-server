@@ -11,7 +11,6 @@
   "scripts": {
     "start": "dotenv -e .env -- ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/app.ts",
     "start:prod": "dotenv -e .env -- NODE_ENV=production node dist/app.js",
-    "build": "rm -rf dist && tsc && cp -r src/generated dist",
     "test": "NODE_ENV=test dotenv -e .env -- jest --runInBand --detectOpenHandles",
     "test:watch": "yarn run test --watch",
     "generate:nexus": "ts-node --transpile-only src/schema",
