@@ -1,6 +1,6 @@
 {
   "name": "@seonghyeonkimm/cas-template",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "repository": "git@github.com:seonghyeonkimm/create-apollo-server.git",
   "author": "Seonghyeon Kim <impressor7@gmail.com>",
   "license": "MIT",
