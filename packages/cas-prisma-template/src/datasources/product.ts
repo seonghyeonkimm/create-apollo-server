@@ -1,16 +1,16 @@
-import { ProductInput } from '~generated/graphql';
+import type { NexusGenInputs } from '~generated/nexusTypes.gen';
 
 import BaseDataSource from './base';
 
 class ProductAPI extends BaseDataSource {
-  async createProduct(input: ProductInput) {
+  async createProduct(input: NexusGenInputs['ProductInput']) {
     const { prisma } = this.context!;
     const { name, options, tags } = input;
     const newProduct = await prisma.product.create({
       data: {
         name,
-        options: BaseDataSource.connectOrCreate(options),
         tags: BaseDataSource.connectOrCreate(tags),
+        options: BaseDataSource.connectOrCreate(options),
       },
       include: {
         tags: true,
@@ -26,7 +26,7 @@ class ProductAPI extends BaseDataSource {
     const products = await prisma.product.findMany({
       include: { tags: true, options: true },
     });
-    return products;
+    return { results: products, cursor: null };
   }
 }
 

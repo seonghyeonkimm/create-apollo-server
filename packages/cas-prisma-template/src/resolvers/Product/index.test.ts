@@ -8,24 +8,10 @@ describe('[Resolver.Product]', () => {
   });
 
   describe('[Query.createProduct]', () => {
-    it('throw UserInputError when input is not provided', async () => {
-      try {
-        await client?.request(gql`
-          mutation {
-            createProduct {
-              id
-            }
-          }
-        `);
-      } catch (error) {
-        expect(error).toBeDefined();
-      }
-    });
-
     it('return new Product', async () => {
       const response = await client?.request(
         gql`
-          mutation CreateChannel($input: ProductInput) {
+          mutation CreateProduct($input: ProductInput!) {
             createProduct(input: $input) {
               id
             }
@@ -42,14 +28,16 @@ describe('[Resolver.Product]', () => {
   describe('[Query.products]', () => {
     it('return products', async () => {
       const response = await client?.request(gql`
-        query {
+        query Products {
           products {
-            id
+            results {
+              id
+            }
           }
         }
       `);
 
-      expect(response).toHaveProperty('products');
+      expect(response.products).toHaveProperty('results');
     });
   });
 });

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
 
-import { TContext } from '../server';
+import { TContext } from '../context';
 
 class BaseDataSource extends DataSource<TContext> {
   protected context: TContext | undefined;
@@ -10,7 +10,7 @@ class BaseDataSource extends DataSource<TContext> {
     this.context = config.context;
   }
 
-  static connectOrCreate(data?: Record<string, any>[]) {
+  static connectOrCreate(data?: Record<string, any>[] | null) {
     return data?.reduce(
       (result, item) => {
         const { id, ...rest } = item;

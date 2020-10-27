@@ -2,7 +2,7 @@ import type { ApolloServerPlugin } from 'apollo-server-plugin-base';
 import chalk from 'chalk';
 import util from 'util';
 
-import type { TContext } from '../server';
+import type { TContext } from '../context';
 
 const LoggingPlugin = {
   requestDidStart({ request }) {

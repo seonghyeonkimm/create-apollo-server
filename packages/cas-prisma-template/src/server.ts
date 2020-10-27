@@ -1,31 +1,18 @@
-import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
-import { loadSchemaSync } from '@graphql-tools/load';
-import { addResolversToSchema } from '@graphql-tools/schema';
 import {
   ApolloServer,
   AuthenticationError,
   UserInputError,
 } from 'apollo-server';
-import path from 'path';
 
 import createContext from './context';
 import createDataSources from './datasources';
 import createPlugins from './plugins';
-import resolvers from './resolvers';
-
-const schema = loadSchemaSync(path.join(__dirname, 'schemas/schema.graphql'), {
-  loaders: [new GraphQLFileLoader()],
-});
-
-const schemaWithResolvers = addResolversToSchema({
-  schema,
-  resolvers,
-});
+import schema from './schema';
 
 const server = new ApolloServer({
+  schema,
   context: createContext,
   plugins: createPlugins(),
-  schema: schemaWithResolvers,
   dataSources: createDataSources,
   engine: {
     graphVariant: 'current',
