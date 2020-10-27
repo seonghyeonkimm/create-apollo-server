@@ -18,7 +18,7 @@ const DEFAULT_TEMPLATE = {
 };
 
 const PRIMSA_TEMPLATE = {
-  version: '0.0.9',
+  version: '0.0.10',
   name: '@seonghyeonkimm/cas-prisma-template',
 };
 
